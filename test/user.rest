@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:3000
+
+### Create a user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john.doe@gmail.com",
+    "password": "password"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@gmail.com",
+  "password": "password"
+}
+
+### Verify
+POST {{baseUrl}}/auth/verify
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMjc5MzM0NiwiZXhwIjoxODE5MTkzMzQ2fQ.R90kr6N3J8nnglei6BCEiGIhpsDel_r2kE_h1Jo3bcY"
+}
