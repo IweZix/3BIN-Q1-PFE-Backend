@@ -1,11 +1,12 @@
 import {
-    Body, ConflictException,
+    Body,
+    ConflictException,
     Controller,
     HttpCode,
     NotFoundException,
     Post,
-    ValidationPipe
-} from "@nestjs/common";
+    ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
 import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
