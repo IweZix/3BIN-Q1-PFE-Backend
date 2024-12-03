@@ -4,8 +4,9 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { config } from 'src/utils/config';
-import { User } from 'src/schemas/user.schema';
-import { LoginDTO, UserDTO } from 'src/dto/user.dto';
+import { Admin } from 'src/schemas/admin.schema';
+import { RegisterAdminDTO } from 'src/dto/RegisterAdminDTO';
+import { LoginDTO } from 'src/dto/LoginDTO';
 
 /**
  * The auth service.
@@ -21,15 +22,15 @@ export class AuthService {
      * @param userModel The auth model.
      */
     public constructor(
-        @InjectModel(User.name) private userModel: Model<User>,
+        @InjectModel(Admin.name) private userModel: Model<Admin>,
     ) {}
 
     /**
-     * Create a new auth.
+     * Create a new admin.
      * @param user The auth to create.
-     * @returns {Promise<User>} The created auth.
+     * @returns {Promise<Admin>} The created auth.
      */
-    public async register(user: UserDTO): Promise<User> {
+    public async register(user: RegisterAdminDTO): Promise<Admin> {
         const hashedPassword = await bcrypt.hash(
             user.password,
             this.SALT_ROUNDS,
@@ -38,7 +39,7 @@ export class AuthService {
             ...user,
             password: hashedPassword,
         });
-        const userSaved: User = await newUser.save();
+        const userSaved: Admin = await newUser.save();
         const token = jwt.sign({ email: userSaved.email }, this.JWT_SECRET, {
             expiresIn: this.JWT_LIFETIME,
         });
@@ -50,9 +51,9 @@ export class AuthService {
      * Login a user.
      * @param user The user to login.
      * @param userFound The user found by email.
-     * @returns {Promise<User>} The logged-in user.
+     * @returns {Promise<Admin>} The logged-in user.
      */
-    public async login(user: LoginDTO, userFound: User): Promise<User> {
+    public async login(user: LoginDTO, userFound: Admin): Promise<Admin> {
         const isPasswordValid = await bcrypt.compare(
             user.password,
             userFound.password,
@@ -70,13 +71,13 @@ export class AuthService {
     /**
      * Verify a token.
      * @param token The token to verify.
-     * @returns {Promise<User>} The user.
+     * @returns {Promise<Admin>} The user.
      */
-    public async verify(token: string): Promise<User> {
+    public async verify(token: string): Promise<Admin> {
         console.log(token);
         try {
             const decoded = jwt.verify(token, this.JWT_SECRET);
-            const user = await this.getUserByEmail(decoded.email);
+            const user = await this.getAdminByEmail(decoded.email);
             const { password, ...userWithoutPassword } = user.toObject();
             return userWithoutPassword;
         } catch (error: any) {
@@ -87,9 +88,9 @@ export class AuthService {
     /**
      * Get a user by its email.
      * @param email The email of the user.
-     * @returns {Promise<User>} The user.
+     * @returns {Promise<Admin>} The user.
      */
-    public async getUserByEmail(email: string): Promise<User> {
+    public async getAdminByEmail(email: string): Promise<Admin> {
         return await this.userModel
             .findOne({ email })
             .select('+password')

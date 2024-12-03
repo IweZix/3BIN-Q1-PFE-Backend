@@ -7,8 +7,9 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from 'src/schemas/user.schema';
-import { UserDTO, LoginDTO } from 'src/dto/user.dto';
+import { Admin } from 'src/schemas/admin.schema';
+import { RegisterAdminDTO } from 'src/dto/RegisterAdminDTO';
+import { LoginDTO } from 'src/dto/LoginDTO';
 
 /**
  * The controller for the auth module.
@@ -31,14 +32,16 @@ export class AuthController {
     }
 
     /**
-     * Create a new auth.
+     * Create a new admin.
      * @param user The auth to create.
-     * @returns {Promise<User>} The created auth.
+     * @returns {Promise<Admin>} The created auth.
      */
-    @Post('register')
+    @Post('register-admin')
     @HttpCode(201)
-    async register(@Body(new ValidationPipe()) user: UserDTO): Promise<User> {
-        const userFound: User = await this.userService.getUserByEmail(user.email);
+    async registerAdmin(@Body(new ValidationPipe()) user: RegisterAdminDTO): Promise<Admin> {
+        const userFound: Admin = await this.userService.getAdminByEmail(
+            user.email,
+        );
         if (userFound) {
             throw new NotFoundException('User already exists');
         }
@@ -48,21 +51,26 @@ export class AuthController {
     /**
      * Login a user.
      * @param user The user to login.
-     * @returns {Promise<User>} The logged-in user.
+     * @returns {Promise<Admin>} The logged-in user.
      */
     @Post('login')
     @HttpCode(200)
-    async login(@Body(new ValidationPipe()) user: LoginDTO): Promise<User> {
-        const userFound = await this.userService.getUserByEmail(user.email);
+    async login(@Body(new ValidationPipe()) user: LoginDTO): Promise<Admin> {
+        const userFound = await this.userService.getAdminByEmail(user.email);
         if (!userFound) {
             throw new NotFoundException('User not found');
         }
         return await this.userService.login(user, userFound);
     }
 
+    /**
+     * Verify a user.
+     * @param token The token to verify.
+     * @returns {Promise<Admin>} The verified user.
+     */
     @Post('verify')
     @HttpCode(200)
-    async verify(@Body('token', new ValidationPipe()) token: string): Promise<User> {
+    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
         return this.userService.verify(token);
     }
 }
