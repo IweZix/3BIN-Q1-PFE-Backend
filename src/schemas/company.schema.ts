@@ -16,4 +16,4 @@ export class Company extends Document {
     template: number[];
 }
 
-export const AdminSchema = SchemaFactory.createForClass(Company);
+export const CompanySchema = SchemaFactory.createForClass(Company);

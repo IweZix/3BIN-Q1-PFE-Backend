@@ -28,5 +28,6 @@ module.exports = {
         useTabs: false, // Utilise des espaces, pas des tabulations
       },
     ],
+    'max-len': ['error', { code: 120 }],
   },
 };
