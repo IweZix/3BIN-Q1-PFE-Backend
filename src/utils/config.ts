@@ -10,7 +10,7 @@ const {
 
     MONGO_USER,
     MONGO_PASSWORD,
-    MONGO_HOST
+    MONGO_HOST,
 } = process.env;
 
 if (

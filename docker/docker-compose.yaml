@@ -7,8 +7,8 @@ services:
     ports:
       - "27017:27017"  # Expose the port
     environment:
-      MONGO_INITDB_ROOT_USERNAME: [USER]  # Username root
-      MONGO_INITDB_ROOT_PASSWORD: [PASSWORD]  # Password example
+      MONGO_INITDB_ROOT_USERNAME: root  # Username root
+      MONGO_INITDB_ROOT_PASSWORD: example  # Password example
     volumes:
       - mongo-data:/data/db  # Mount the volume
 

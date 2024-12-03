@@ -6,7 +6,7 @@ import { Document } from 'mongoose';
  * Used by the auth module to access the auth collection in the database.
  */
 @Schema()
-export class User extends Document {
+export class Admin extends Document {
     @Prop({ required: true })
     name: string;
 
@@ -17,4 +17,4 @@ export class User extends Document {
     password: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const AdminSchema = SchemaFactory.createForClass(Admin);

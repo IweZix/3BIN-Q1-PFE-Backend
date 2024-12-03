@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 
-### Create a user
+### Create an admin
 POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
@@ -8,6 +8,19 @@ Content-Type: application/json
     "name": "John Doe",
     "email": "john.doe@gmail.com",
     "password": "password"
+}
+
+### Create a company
+POST {{baseUrl}}/auth/register-company
+Content-Type: application/json
+
+{
+    "name": "superCompany",
+    "email": "contact@supercompany.be",
+    "password": "password",
+    "template" : [
+      1, 2, 3, 4, 5
+    ]
 }
 
 ### Login
