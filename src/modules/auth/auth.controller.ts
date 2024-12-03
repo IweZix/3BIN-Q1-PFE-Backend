@@ -1,14 +1,14 @@
 import {
-    Body,
+    Body, ConflictException,
     Controller,
     HttpCode,
     NotFoundException,
     Post,
-    ValidationPipe,
-} from '@nestjs/common';
+    ValidationPipe
+} from "@nestjs/common";
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
-import { RegisterAdminDTO } from 'src/dto/RegisterAdminDTO';
+import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
 
 /**
@@ -38,12 +38,12 @@ export class AuthController {
      */
     @Post('register-admin')
     @HttpCode(201)
-    async registerAdmin(@Body(new ValidationPipe()) user: RegisterAdminDTO): Promise<Admin> {
+    async registerAdmin(@Body(new ValidationPipe()) user: RegisteAdminDTO): Promise<Admin> {
         const userFound: Admin = await this.userService.getAdminByEmail(
             user.email,
         );
         if (userFound) {
-            throw new NotFoundException('User already exists');
+            throw new ConflictException('User already exists');
         }
         return this.userService.register(user);
     }
@@ -53,7 +53,7 @@ export class AuthController {
      * @param user The user to login.
      * @returns {Promise<Admin>} The logged-in user.
      */
-    @Post('login')
+    @Post('login-admin')
     @HttpCode(200)
     async login(@Body(new ValidationPipe()) user: LoginDTO): Promise<Admin> {
         const userFound = await this.userService.getAdminByEmail(user.email);
@@ -68,7 +68,7 @@ export class AuthController {
      * @param token The token to verify.
      * @returns {Promise<Admin>} The verified user.
      */
-    @Post('verify')
+    @Post('verify-admin')
     @HttpCode(200)
     async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
         return this.userService.verify(token);

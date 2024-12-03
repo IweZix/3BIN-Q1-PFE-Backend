@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { config } from 'src/utils/config';
 import { Admin } from 'src/schemas/admin.schema';
-import { RegisterAdminDTO } from 'src/dto/RegisterAdminDTO';
+import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
 
 /**
@@ -30,7 +30,7 @@ export class AuthService {
      * @param user The auth to create.
      * @returns {Promise<Admin>} The created auth.
      */
-    public async register(user: RegisterAdminDTO): Promise<Admin> {
+    public async register(user: RegisteAdminDTO): Promise<Admin> {
         const hashedPassword = await bcrypt.hash(
             user.password,
             this.SALT_ROUNDS,
@@ -74,14 +74,13 @@ export class AuthService {
      * @returns {Promise<Admin>} The user.
      */
     public async verify(token: string): Promise<Admin> {
-        console.log(token);
         try {
             const decoded = jwt.verify(token, this.JWT_SECRET);
             const user = await this.getAdminByEmail(decoded.email);
             const { password, ...userWithoutPassword } = user.toObject();
             return userWithoutPassword;
         } catch (error: any) {
-            throw new UnauthorizedException('Invalid token');
+            throw new UnauthorizedException('Invalid token', error.message);
         }
     }
 
