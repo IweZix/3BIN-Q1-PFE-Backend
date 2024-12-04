@@ -14,10 +14,10 @@ import { LoginDTO } from 'src/dto/LoginDTO';
 
 /**
  * The controller for the auth module.
- * API paths: /auth
+ * API paths: /authAdmin
  * URL: http://localhost:3000/auth
  */
-@Controller('auth')
+@Controller('authAdmin')
 export class AuthController {
     /**
      * The auth service.
