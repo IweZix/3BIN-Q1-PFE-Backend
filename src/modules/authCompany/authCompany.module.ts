@@ -6,12 +6,7 @@ import { AuthCompanyService } from './authCompany.service';
 import { QuestionModule } from '../question/question.module';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-            { name: Company.name, schema: CompanySchema },
-        ]),
-        QuestionModule,
-    ],
+    imports: [MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]), QuestionModule],
     providers: [AuthCompanyService],
     controllers: [AuthCompanyController],
     exports: [AuthCompanyService],

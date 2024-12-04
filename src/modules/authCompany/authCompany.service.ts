@@ -23,10 +23,7 @@ export class AuthCompanyService {
 
     public async register(company: RegisterCompanyDTO): Promise<Company> {
         company.template.push(0);
-        const hashedPassword = await bcrypt.hash(
-            company.password,
-            this.SALT_ROUNDS,
-        );
+        const hashedPassword = await bcrypt.hash(company.password, this.SALT_ROUNDS);
         const newCompany = new this.companyModel({
             ...company,
             password: hashedPassword,
@@ -40,14 +37,8 @@ export class AuthCompanyService {
         return { ...companyWithoutPassword, token };
     }
 
-    public async login(
-        company: LoginDTO,
-        companyFound: Company,
-    ): Promise<Company> {
-        const isPasswordValid = await bcrypt.compare(
-            company.password,
-            companyFound.password,
-        );
+    public async login(company: LoginDTO, companyFound: Company): Promise<Company> {
+        const isPasswordValid = await bcrypt.compare(company.password, companyFound.password);
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid password');
         }
@@ -70,35 +61,23 @@ export class AuthCompanyService {
     }
 
     public async getCompanyByEmail(email: string): Promise<Company> {
-        return await this.companyModel
-            .findOne({ email })
-            .select('+password')
-            .exec();
+        return await this.companyModel.findOne({ email }).select('+password').exec();
     }
 
-    private async arrangeTemplate(
-        company: RegisterCompanyDTO,
-    ): Promise<QuestionAnswer[]> {
-        const allQuestions = await this.questionService.getAllQuestions();
+    private async arrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
+        const allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
         const allTemplateQuestions = company.template;
         for (const answerQuestion of allQuestions) {
             for (const question of answerQuestion.questionsList) {
                 for (let i = 0; i < question.responsesList.length; i++) {
                     console.log(parseInt(question.responsesList[i].template));
-                    if (
-                        !allTemplateQuestions.includes(
-                            parseInt(question.responsesList[i].template),
-                        )
-                    ) {
+                    if (!allTemplateQuestions.includes(parseInt(question.responsesList[i].template))) {
                         question.responsesList.splice(i, 1);
                         i--;
                     }
                 }
                 if (question.responsesList.length == 0) {
-                    answerQuestion.questionsList.splice(
-                        answerQuestion.questionsList.indexOf(question),
-                        1,
-                    );
+                    answerQuestion.questionsList.splice(answerQuestion.questionsList.indexOf(question), 1);
                 }
             }
         }

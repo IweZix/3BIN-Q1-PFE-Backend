@@ -1,11 +1,4 @@
-import {
-    Body,
-    ConflictException,
-    Controller,
-    HttpCode,
-    Post,
-    ValidationPipe,
-} from '@nestjs/common';
+import { Body, ConflictException, Controller, HttpCode, Post, ValidationPipe } from '@nestjs/common';
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
@@ -21,11 +14,8 @@ export class AuthCompanyController {
 
     @Post('register-company')
     @HttpCode(201)
-    async registerCompany(
-        @Body(new ValidationPipe()) company: RegisterCompanyDTO,
-    ): Promise<Company> {
-        const companyFound: Company =
-            await this.authCompanyService.getCompanyByEmail(company.email);
+    async registerCompany(@Body(new ValidationPipe()) company: RegisterCompanyDTO): Promise<Company> {
+        const companyFound: Company = await this.authCompanyService.getCompanyByEmail(company.email);
         if (companyFound) {
             throw new ConflictException('Company already exists');
         }
@@ -34,12 +24,8 @@ export class AuthCompanyController {
 
     @Post('login-company')
     @HttpCode(200)
-    async login(
-        @Body(new ValidationPipe()) company: LoginDTO,
-    ): Promise<Company> {
-        const companyFound = await this.authCompanyService.getCompanyByEmail(
-            company.email,
-        );
+    async login(@Body(new ValidationPipe()) company: LoginDTO): Promise<Company> {
+        const companyFound = await this.authCompanyService.getCompanyByEmail(company.email);
         if (!companyFound) {
             throw new ConflictException('Company not found');
         }
@@ -48,9 +34,7 @@ export class AuthCompanyController {
 
     @Post('verify-company')
     @HttpCode(200)
-    async verify(
-        @Body('token', new ValidationPipe()) token: string,
-    ): Promise<Company> {
+    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Company> {
         return this.authCompanyService.verify(token);
     }
 }

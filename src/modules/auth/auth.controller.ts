@@ -1,12 +1,4 @@
-import {
-    Body,
-    ConflictException,
-    Controller,
-    HttpCode,
-    NotFoundException,
-    Post,
-    ValidationPipe,
-} from '@nestjs/common';
+import { Body, ConflictException, Controller, HttpCode, NotFoundException, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
 import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
@@ -39,12 +31,8 @@ export class AuthController {
      */
     @Post('register-admin')
     @HttpCode(201)
-    async registerAdmin(
-        @Body(new ValidationPipe()) user: RegisteAdminDTO,
-    ): Promise<Admin> {
-        const userFound: Admin = await this.userService.getAdminByEmail(
-            user.email,
-        );
+    async registerAdmin(@Body(new ValidationPipe()) user: RegisteAdminDTO): Promise<Admin> {
+        const userFound: Admin = await this.userService.getAdminByEmail(user.email);
         if (userFound) {
             throw new ConflictException('User already exists');
         }
@@ -73,9 +61,7 @@ export class AuthController {
      */
     @Post('verify-admin')
     @HttpCode(200)
-    async verify(
-        @Body('token', new ValidationPipe()) token: string,
-    ): Promise<Admin> {
+    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
         return this.userService.verify(token);
     }
 }

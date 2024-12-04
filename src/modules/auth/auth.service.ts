@@ -21,9 +21,7 @@ export class AuthService {
      * The constructor of the auth service.
      * @param userModel The auth model.
      */
-    public constructor(
-        @InjectModel(Admin.name) private userModel: Model<Admin>,
-    ) {}
+    public constructor(@InjectModel(Admin.name) private userModel: Model<Admin>) {}
 
     /**
      * Create a new admin.
@@ -31,10 +29,7 @@ export class AuthService {
      * @returns {Promise<Admin>} The created auth.
      */
     public async register(user: RegisteAdminDTO): Promise<Admin> {
-        const hashedPassword = await bcrypt.hash(
-            user.password,
-            this.SALT_ROUNDS,
-        );
+        const hashedPassword = await bcrypt.hash(user.password, this.SALT_ROUNDS);
         const newUser = new this.userModel({
             ...user,
             password: hashedPassword,
@@ -54,10 +49,7 @@ export class AuthService {
      * @returns {Promise<Admin>} The logged-in user.
      */
     public async login(user: LoginDTO, userFound: Admin): Promise<Admin> {
-        const isPasswordValid = await bcrypt.compare(
-            user.password,
-            userFound.password,
-        );
+        const isPasswordValid = await bcrypt.compare(user.password, userFound.password);
         if (!isPasswordValid) {
             throw new UnauthorizedException('Email or password is incorrect');
         }
@@ -90,9 +82,6 @@ export class AuthService {
      * @returns {Promise<Admin>} The user.
      */
     public async getAdminByEmail(email: string): Promise<Admin> {
-        return await this.userModel
-            .findOne({ email })
-            .select('+password')
-            .exec();
+        return await this.userModel.findOne({ email }).select('+password').exec();
     }
 }
