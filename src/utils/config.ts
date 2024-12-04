@@ -13,14 +13,7 @@ const {
     MONGO_HOST,
 } = process.env;
 
-if (
-    !BCRYPT_SALT_ROUNDS ||
-    !JWT_SECRET ||
-    !JWT_LIFETIME ||
-    !MONGO_USER ||
-    !MONGO_PASSWORD ||
-    !MONGO_HOST
-) {
+if (!BCRYPT_SALT_ROUNDS || !JWT_SECRET || !JWT_LIFETIME || !MONGO_USER || !MONGO_PASSWORD || !MONGO_HOST) {
     throw new Error('Some environment variables are missing');
 }
 

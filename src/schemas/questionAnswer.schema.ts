@@ -11,5 +11,4 @@ export class QuestionAnswer extends Document {
     questionsList: Question[];
 }
 
-export const QuestionAnswerSchema =
-    SchemaFactory.createForClass(QuestionAnswer);
+export const QuestionAnswerSchema = SchemaFactory.createForClass(QuestionAnswer);

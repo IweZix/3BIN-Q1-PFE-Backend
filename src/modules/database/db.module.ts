@@ -10,12 +10,9 @@ import { config } from '../../utils/config';
         /**
          * MongooseModule.forRoot() connects to the MongoDB database.
          */
-        MongooseModule.forRoot(
-            `mongodb://${config.MONGO_USER}:${config.MONGO_PASSWORD}@${config.MONGO_HOST}`,
-            {
-                dbName: 'PFE',
-            },
-        ),
+        MongooseModule.forRoot(`mongodb://${config.MONGO_USER}:${config.MONGO_PASSWORD}@${config.MONGO_HOST}`, {
+            dbName: 'PFE',
+        }),
     ],
     exports: [MongooseModule], // Exporte MongooseModule pour qu'il soit accessible dans d'autres modules
 })

@@ -26,8 +26,9 @@ module.exports = {
             {
                 tabWidth: 4, // Assurer un tabWidth de 4 dans Prettier via ESLint
                 useTabs: false, // Utilise des espaces, pas des tabulations
+                semi: true, // Ajoute un point-virgule à la fin de chaque instruction
+                printWidth: '120', // Ne pas limiter la largeur de la ligne
             },
         ],
-        'max-len': ['error', { code: 120 }],
     },
 };
