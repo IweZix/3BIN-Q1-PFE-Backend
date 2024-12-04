@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000
 
 ### Create an admin
-POST {{baseUrl}}/auth/register-admin
+POST {{baseUrl}}/authAdmin/register-admin
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST {{baseUrl}}/auth/login-admin
+POST {{baseUrl}}/authAdmin/login-admin
 Content-Type: application/json
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ### Verify
-POST {{baseUrl}}/auth/verify-admin
+POST {{baseUrl}}/authAdmin/verify-admin
 Content-Type: application/json
 
 {
