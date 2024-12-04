@@ -1,7 +1,6 @@
-import { IsString, IsNotEmpty, IsNumber, IsArray } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsArray } from 'class-validator';
 
 export class QuestionDTO {
-
     @IsNumber()
     @IsNotEmpty()
     issueGroup: number;

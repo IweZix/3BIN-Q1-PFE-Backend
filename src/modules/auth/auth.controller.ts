@@ -39,7 +39,9 @@ export class AuthController {
      */
     @Post('register-admin')
     @HttpCode(201)
-    async registerAdmin(@Body(new ValidationPipe()) user: RegisteAdminDTO): Promise<Admin> {
+    async registerAdmin(
+        @Body(new ValidationPipe()) user: RegisteAdminDTO,
+    ): Promise<Admin> {
         const userFound: Admin = await this.userService.getAdminByEmail(
             user.email,
         );
@@ -71,7 +73,9 @@ export class AuthController {
      */
     @Post('verify-admin')
     @HttpCode(200)
-    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
+    async verify(
+        @Body('token', new ValidationPipe()) token: string,
+    ): Promise<Admin> {
         return this.userService.verify(token);
     }
 }
