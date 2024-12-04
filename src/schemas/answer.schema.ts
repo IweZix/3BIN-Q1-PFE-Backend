@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Exclude } from "class-transformer";
 
 @Schema()
 export class Answer extends Document {
@@ -15,9 +16,11 @@ export class Answer extends Document {
     @Prop({ required: true })
     is2years: boolean;
 
+    @Exclude()
     @Prop({ required: true })
     scoreNow: number;
 
+    @Exclude()
     @Prop({ required: true })
     score2: number;
 
