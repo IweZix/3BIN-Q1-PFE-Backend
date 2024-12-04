@@ -89,6 +89,30 @@ export class AuthCompanyService {
         return allQuestions;
     }
 
+
+        /**
+     * Get a user email by a token
+     * @param token The token to get the userId from.
+     * @returns {Promise<string>} The userId.
+     */
+    public async getUserByToken(token: string): Promise<string> {
+        const decoded = jwt.verify(token, this.JWT_SECRET);
+        return decoded.email;
+    }
+
+    public async answerForm(answerForm: QuestionAnswer[], email: string): Promise<void> {
+        const company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+             throw new Error("Company not found");
+        }
+        company.questions = answerForm;
+        await company.save();
+    }
+
+
+
+
+
      /**
      * Verify if the password is updated.
      * @param company The company.
