@@ -9,6 +9,7 @@ import {
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
+import {  QuestionAnswer } from '../../schemas/questionAnswer.schema';
 import { LoginDTO } from '../../dto/LoginDTO';
 
 @Controller('authCompany')
@@ -52,5 +53,13 @@ export class AuthCompanyController {
         @Body('token', new ValidationPipe()) token: string,
     ): Promise<Company> {
         return this.authCompanyService.verify(token);
+    }
+
+    @Post('/answerForm')
+    @HttpCode(201)
+    async answerForm(@Body('answerForm') answerForm : QuestionAnswer[],
+    @Body('token', new ValidationPipe() )token:string ): Promise<void> {
+        const email=await this.authCompanyService.getUserByToken(token);
+        this.authCompanyService.answerForm(answerForm,email);
     }
 }
