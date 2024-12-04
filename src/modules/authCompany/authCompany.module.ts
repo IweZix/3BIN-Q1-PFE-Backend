@@ -6,7 +6,9 @@ import { AuthCompanyService } from './authCompany.service';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+        MongooseModule.forFeature([
+            { name: Company.name, schema: CompanySchema },
+        ]),
     ],
     providers: [AuthCompanyService],
     controllers: [AuthCompanyController],

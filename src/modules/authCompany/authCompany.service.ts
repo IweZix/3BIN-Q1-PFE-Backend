@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { config } from '../../utils/config';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -35,7 +35,10 @@ export class AuthCompanyService {
         return { ...companyWithoutPassword, token };
     }
 
-    public async login(company: LoginDTO, companyFound: Company): Promise<Company> {
+    public async login(
+        company: LoginDTO,
+        companyFound: Company,
+    ): Promise<Company> {
         const isPasswordValid = await bcrypt.compare(
             company.password,
             companyFound.password,
