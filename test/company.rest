@@ -9,7 +9,7 @@ Content-Type: application/json
   "email": "contact@steam.com",
   "password": "password",
   "template": [
-    1, 2, 3, 4
+    1
   ]
 }
 

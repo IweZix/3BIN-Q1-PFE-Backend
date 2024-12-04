@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Exclude } from "class-transformer";
+import { Exclude } from 'class-transformer';
 
 @Schema()
 export class Answer extends Document {
@@ -25,7 +25,5 @@ export class Answer extends Document {
     score2: number;
 
     @Prop({ required: true })
-    template: number;
+    template: string;
 }
-
-// export const AnswerSchema = SchemaFactory.createForClass(Answer);

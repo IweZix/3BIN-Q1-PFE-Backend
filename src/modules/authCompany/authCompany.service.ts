@@ -7,6 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { LoginDTO } from '../../dto/LoginDTO';
+import { QuestionService } from '../question/question.service';
+import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
 
 @Injectable()
 export class AuthCompanyService {
@@ -15,17 +17,20 @@ export class AuthCompanyService {
     private readonly JWT_LIFETIME: number = config.JWT_LIFETIME;
 
     public constructor(
-        @InjectModel(Company.name) private userModel: Model<Company>,
+        @InjectModel(Company.name) private companyModel: Model<Company>,
+        private readonly questionService: QuestionService,
     ) {}
 
     public async register(company: RegisterCompanyDTO): Promise<Company> {
+        company.template.push(0);
         const hashedPassword = await bcrypt.hash(
             company.password,
             this.SALT_ROUNDS,
         );
-        const newCompany = new this.userModel({
+        const newCompany = new this.companyModel({
             ...company,
             password: hashedPassword,
+            questions: await this.arrangeTemplate(company),
         });
         const companySaved: Company = await newCompany.save();
         const token = jwt.sign({ email: companySaved.email }, this.JWT_SECRET, {
@@ -65,9 +70,38 @@ export class AuthCompanyService {
     }
 
     public async getCompanyByEmail(email: string): Promise<Company> {
-        return await this.userModel
+        return await this.companyModel
             .findOne({ email })
             .select('+password')
             .exec();
+    }
+
+    private async arrangeTemplate(
+        company: RegisterCompanyDTO,
+    ): Promise<QuestionAnswer[]> {
+        const allQuestions = await this.questionService.getAllQuestions();
+        const allTemplateQuestions = company.template;
+        for (const answerQuestion of allQuestions) {
+            for (const question of answerQuestion.questionsList) {
+                for (let i = 0; i < question.responsesList.length; i++) {
+                    console.log(parseInt(question.responsesList[i].template));
+                    if (
+                        !allTemplateQuestions.includes(
+                            parseInt(question.responsesList[i].template),
+                        )
+                    ) {
+                        question.responsesList.splice(i, 1);
+                        i--;
+                    }
+                }
+                if (question.responsesList.length == 0) {
+                    answerQuestion.questionsList.splice(
+                        answerQuestion.questionsList.indexOf(question),
+                        1,
+                    );
+                }
+            }
+        }
+        return allQuestions;
     }
 }
