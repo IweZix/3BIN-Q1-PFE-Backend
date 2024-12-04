@@ -3,6 +3,7 @@ import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
 import {  QuestionAnswer } from '../../schemas/questionAnswer.schema';
+import {  QuestionAnswer } from '../../schemas/questionAnswer.schema';
 import { LoginDTO } from '../../dto/LoginDTO';
 
 @Controller('authCompany')
