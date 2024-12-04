@@ -13,7 +13,7 @@ import { QuestionController } from './question.controller';
             { name: QuestionAnswer.name, schema: QuestionAnswerSchema },
         ]),
     ],
-    providers: [QuestionService],
+    providers: [QuestionService, QuestionService],
     controllers: [QuestionController],
     exports: [QuestionService],
 })

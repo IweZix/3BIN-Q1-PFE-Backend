@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, IsArray } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class RegisteAdminDTO {
     @IsEmail()
