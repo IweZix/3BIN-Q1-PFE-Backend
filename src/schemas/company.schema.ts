@@ -19,6 +19,9 @@ export class Company extends Document {
     @Prop({ required: false })
     questions: QuestionAnswer[];
 
+    @Prop({ required: false })
+    naQuestions: QuestionAnswer[];
+
     @Prop({ required: true })
     isPasswordUpdated: boolean;
 }
