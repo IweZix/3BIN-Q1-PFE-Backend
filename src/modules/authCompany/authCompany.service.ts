@@ -22,6 +22,10 @@ export class AuthCompanyService {
         private readonly questionService: QuestionService,
     ) {}
 
+    /**
+     * Register a company
+     * @param company
+     */
     public async register(company: RegisterCompanyDTO): Promise<Company> {
         company.template.push(0);
         const hashedPassword = await bcrypt.hash(company.password, this.SALT_ROUNDS);
@@ -29,6 +33,7 @@ export class AuthCompanyService {
             ...company,
             password: hashedPassword,
             questions: await this.arrangeTemplate(company),
+            naQuestions: await this.inverseArrangeTemplate(company),
             isPasswordUpdated: false,
         });
         const companySaved: Company = await newCompany.save();
@@ -66,29 +71,6 @@ export class AuthCompanyService {
         return await this.companyModel.findOne({ email }).select('+password').exec();
     }
 
-    private async arrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
-        let allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
-        const allTemplateQuestions = company.template;
-        for (const answerQuestion of allQuestions) {
-            for (const question of answerQuestion.questionsList) {
-                for (const answer of question.responsesList) {
-                    if (!allTemplateQuestions.includes(Number(answer.template))) {
-                        question.responsesList = question.responsesList.filter(
-                            (response: Answer): Boolean => response.template !== answer.template,
-                        );
-                    }
-                }
-            }
-            answerQuestion.questionsList = answerQuestion.questionsList.filter(
-                question => question.responsesList.length > 0,
-            );
-        }
-
-        allQuestions = allQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
-
-        return allQuestions;
-    }
-
     /**
      * Get a user email by a token
      * @param token The token to get the userId from.
@@ -116,5 +98,73 @@ export class AuthCompanyService {
      */
     public async verifyPasswordUpdated(company: Company): Promise<boolean> {
         return company.isPasswordUpdated;
+    }
+
+    /**
+     * Get all questions that the company has
+     * @param {RegisterCompanyDTO} company The company
+     * @return {Promise<QuestionAnswer[]>} The questions that the company has
+     */
+    private async arrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
+        let allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
+        const allTemplateQuestions = company.template;
+        for (const answerQuestion of allQuestions) {
+            for (const question of answerQuestion.questionsList) {
+                for (const answer of question.responsesList) {
+                    if (!allTemplateQuestions.includes(Number(answer.template))) {
+                        question.responsesList = question.responsesList.filter(
+                            (response: Answer): Boolean => response.template !== answer.template,
+                        );
+                    }
+                }
+                question.responsesList = question.responsesList.filter(
+                    (response: Answer): Boolean => response.txt_answer !== 'N/A',
+                );
+            }
+            answerQuestion.questionsList = answerQuestion.questionsList.filter(
+                question => question.responsesList.length > 0,
+            );
+        }
+
+        allQuestions = allQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
+
+        return allQuestions;
+    }
+
+    /**
+     * find all questions that are the company does not have
+     * @param {RegisterCompanyDTO} company The company
+     * @return {Promise<QuestionAnswer[]>} The questions that the company does not have
+     */
+    private async inverseArrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
+        let allNAQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
+        const allTemplateQuestions = company.template;
+        for (const answerQuestion of allNAQuestions) {
+            for (const question of answerQuestion.questionsList) {
+                for (const answer of question.responsesList) {
+                    if (allTemplateQuestions.includes(Number(answer.template))) {
+                        question.responsesList = question.responsesList.filter(
+                            (response: Answer): Boolean => response.template !== answer.template,
+                        );
+                    }
+                }
+                question.responsesList = question.responsesList.filter(
+                    (response: Answer): Boolean => {
+                        if (response.txt_answer === 'N/A') {
+                            response.isNow = true;
+                            return true;
+                        }
+                        return false;
+                    },
+                );
+            }
+            answerQuestion.questionsList = answerQuestion.questionsList.filter(
+                question => question.responsesList.length > 0,
+            );
+        }
+
+        allNAQuestions = allNAQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
+
+        return allNAQuestions;
     }
 }
