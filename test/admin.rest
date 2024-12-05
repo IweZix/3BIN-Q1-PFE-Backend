@@ -21,11 +21,9 @@ Content-Type: application/json
 
 ### Verify
 POST {{baseUrl}}/authAdmin/verify-admin
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQzMjgwOCwiZXhwIjoxODE5ODMyODA4fQ.4AjNHeu9VhNPoHzJXU4UJ49z2DxnRZhTPlkeQvcHQVc
 Content-Type: application/json
 
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQxNzA2OCwiZXhwIjoxODE5ODE3MDY4fQ.WDby6Gzg3FHKuWllbUDOMwlG155x6dBtZvYo05rYTPg"
-  }
 ### Verify PasswordUpdated
 POST {{baseUrl}}/authAdmin/verify-password-updated
 Content-Type: application/json

@@ -87,7 +87,6 @@ export class AuthCompanyService {
             throw new Error('Company not found');
         }
         company.questions = answerForm;
-        console.log(answerForm);
         await this.companyModel.replaceOne({ email: email }, company).exec();
     }
 
