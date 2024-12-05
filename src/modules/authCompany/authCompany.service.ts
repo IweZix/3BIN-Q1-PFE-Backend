@@ -167,4 +167,16 @@ export class AuthCompanyService {
 
         return allNAQuestions;
     }
+
+    public async updatePassword(email: string, password: string): Promise<boolean> {
+        const hashedPassword = await bcrypt.hash(password, this.SALT_ROUNDS);
+        const company = await this.companyModel.findOne({ email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.password = hashedPassword;
+        company.isPasswordUpdated = true;
+        await company.save();
+        return true;
+    }
 }
