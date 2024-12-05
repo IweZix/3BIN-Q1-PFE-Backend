@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+### Get All Templates
+GET {{baseUrl}}/template
+Content-Type: application/json
+
+### Create One Template
+POST {{baseUrl}}/template/create-template
+Content-Type: application/json
+
+{
+    "templateName": "New Template Name"
+}
