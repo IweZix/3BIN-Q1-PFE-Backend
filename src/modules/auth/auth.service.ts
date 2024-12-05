@@ -33,6 +33,7 @@ export class AuthService {
         const newUser = new this.userModel({
             ...user,
             password: hashedPassword,
+            isPasswordUpdated: false,
         });
         const userSaved: Admin = await newUser.save();
         const token = jwt.sign({ email: userSaved.email }, this.JWT_SECRET, {
@@ -83,5 +84,14 @@ export class AuthService {
      */
     public async getAdminByEmail(email: string): Promise<Admin> {
         return await this.userModel.findOne({ email }).select('+password').exec();
+    }
+
+    /**
+     * Verify if the password is updated.
+     * @param user The user.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+    public async verifyPasswordUpdated(user: Admin): Promise<boolean> {
+        return user.isPasswordUpdated;
     }
 }

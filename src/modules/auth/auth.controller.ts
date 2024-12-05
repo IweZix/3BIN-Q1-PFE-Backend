@@ -64,4 +64,19 @@ export class AuthController {
     async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
         return this.userService.verify(token);
     }
+
+    /**
+     * Verify password updated.
+     * @param email The email of the user.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+    @Post('verify-password-updated')
+    @HttpCode(200)
+    async verifyPasswordUpdated(@Body('email', new ValidationPipe()) email: string): Promise<boolean> {
+        const user = await this.userService.getAdminByEmail(email);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+        return await this.userService.verifyPasswordUpdated(user);
+    }
 }

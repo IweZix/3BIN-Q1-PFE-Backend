@@ -29,3 +29,11 @@ Content-Type: application/json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzMjM5NjEyLCJleHAiOjE4MTk2Mzk2MTJ9._ztgiXC3EDQjVawVr8S8S0wKYI9be60hn3rEnpcb7xw"
 }
+
+### Verify PasswordUpdated
+POST {{baseUrl}}/authCompany/verify-password-updated
+Content-Type: application/json
+
+{
+  "email": "contact@steam.com"
+}

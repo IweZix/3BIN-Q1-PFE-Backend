@@ -28,6 +28,7 @@ export class AuthCompanyService {
             ...company,
             password: hashedPassword,
             questions: await this.arrangeTemplate(company),
+            isPasswordUpdated: false,
         });
         const companySaved: Company = await newCompany.save();
         const token = jwt.sign({ email: companySaved.email }, this.JWT_SECRET, {
@@ -82,5 +83,14 @@ export class AuthCompanyService {
             }
         }
         return allQuestions;
+    }
+
+     /**
+     * Verify if the password is updated.
+     * @param company The company.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+     public async verifyPasswordUpdated(company: Company): Promise<boolean> {
+        return company.isPasswordUpdated;
     }
 }

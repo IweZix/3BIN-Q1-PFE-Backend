@@ -18,6 +18,9 @@ export class Company extends Document {
 
     @Prop({ required: false })
     questions: QuestionAnswer[];
+
+    @Prop({ required: true })
+    isPasswordUpdated: boolean;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
