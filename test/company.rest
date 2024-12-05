@@ -24,11 +24,9 @@ Content-Type: application/json
 
 ### Verify
 POST {{baseUrl}}/authCompany/verify-company
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho
 Content-Type: application/json
 
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDE3MDk0LCJleHAiOjE4MTk4MTcwOTR9.zPxx4ys7Wx35OghNJ7rSl2FPZlq66Rh0OS0SKVbwDGM"
-}
 
 ### Verify PasswordUpdated
 POST {{baseUrl}}/authCompany/verify-password-updated
@@ -40,6 +38,7 @@ Content-Type: application/json
 
 ### Test envoie de response aka formulaire compléter
 POST  {{baseUrl}}/authCompany/answerForm
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho
 Content-Type: application/json
 
 {
@@ -662,15 +661,13 @@ Content-Type: application/json
         }
       ]
     }
-  ],
-  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDEwODAyLCJleHAiOjE4MTk4MTA4MDJ9.eyKpYovOlAnRHoAg_m4FkR4W0EI94ASGJfr7weV3s1Q"}
-
+  ]}
 ###update password authCompany 
 PATCH {{baseUrl}}/authCompany/update-password
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDE3MDk0LCJleHAiOjE4MTk4MTcwOTR9.zPxx4ys7Wx35OghNJ7rSl2FPZlq66Rh0OS0SKVbwDGM",
   "password": "passwordChanged"
 }
 
