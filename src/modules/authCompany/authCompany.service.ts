@@ -74,7 +74,6 @@ export class AuthCompanyService {
      */
     private async arrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
         let allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
-        let allNAQuestions: QuestionAnswer[] = JSON.parse(JSON.stringify(allQuestions));
         const allTemplateQuestions = company.template;
         for (const answerQuestion of allQuestions) {
             for (const question of answerQuestion.questionsList) {
@@ -82,10 +81,6 @@ export class AuthCompanyService {
                     if (!allTemplateQuestions.includes(Number(answer.template))) {
                         question.responsesList = question.responsesList.filter(
                             (response: Answer): Boolean => response.template !== answer.template,
-                        );
-                    } else {
-                        question.responsesList = question.responsesList.filter(
-                            (response: Answer): Boolean => response.template === answer.template,
                         );
                     }
                 }
