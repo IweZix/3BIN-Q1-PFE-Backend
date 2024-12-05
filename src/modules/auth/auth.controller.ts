@@ -81,9 +81,9 @@ export class AuthController {
         return await this.userService.verifyPasswordUpdated(user);
     }
 
-    @Get('getAnswerFormUser/:email')
+    @Get('getAnswerFormUser')
     @HttpCode(200)
-    async getAnswerFormUser(@Param('email') email: string
+    async getAnswerFormUser(@Body('email') email: string
     ,@Headers('Authorization') token: string ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
         try{

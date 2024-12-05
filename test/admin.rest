@@ -35,5 +35,10 @@ Content-Type: application/json
 }
 
 ###Get a form of a user by email
-GET {{baseUrl}}/authAdmin/getAnswerFormUser/contact@steam.com
+GET {{baseUrl}}/authAdmin/getAnswerFormUser
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQwNTk3MywiZXhwIjoxODE5ODA1OTczfQ.dP13d12ucXLURkKvW-iVTzYbfeonJjglkY_xH3P5mCw
+Content-Type: application/json
+
+{
+  "email": "contact@steam.com"
+}
