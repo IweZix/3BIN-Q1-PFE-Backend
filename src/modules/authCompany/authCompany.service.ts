@@ -9,6 +9,7 @@ import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { LoginDTO } from '../../dto/LoginDTO';
 import { QuestionService } from '../question/question.service';
 import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
+import { Answer } from "../../schemas/answer.schema";
 
 @Injectable()
 export class AuthCompanyService {
@@ -65,22 +66,25 @@ export class AuthCompanyService {
     }
 
     private async arrangeTemplate(company: RegisterCompanyDTO): Promise<QuestionAnswer[]> {
-        const allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
+        let allQuestions: QuestionAnswer[] = await this.questionService.getAllQuestions();
         const allTemplateQuestions = company.template;
         for (const answerQuestion of allQuestions) {
             for (const question of answerQuestion.questionsList) {
-                for (let i = 0; i < question.responsesList.length; i++) {
-                    console.log(parseInt(question.responsesList[i].template));
-                    if (!allTemplateQuestions.includes(parseInt(question.responsesList[i].template))) {
-                        question.responsesList.splice(i, 1);
-                        i--;
+                for (const answer of question.responsesList) {
+                    if (!allTemplateQuestions.includes(Number(answer.template))) {
+                        question.responsesList = question.responsesList.filter(
+                            (response: Answer): Boolean => response.template !== answer.template,
+                        );
                     }
                 }
-                if (question.responsesList.length == 0) {
-                    answerQuestion.questionsList.splice(answerQuestion.questionsList.indexOf(question), 1);
-                }
             }
+            answerQuestion.questionsList = answerQuestion.questionsList.filter(
+                (question) => question.responsesList.length > 0
+            );
         }
+
+        allQuestions = allQuestions.filter((questionAnswer) => questionAnswer.questionsList.length > 0);
+
         return allQuestions;
     }
 }
