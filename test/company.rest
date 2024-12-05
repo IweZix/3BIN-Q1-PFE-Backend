@@ -663,7 +663,7 @@ Content-Type: application/json
     }
   ]}
 ###update password authCompany 
-PATCH {{baseUrl}}/authCompany/update-password
+PATCH {{baseUrl}}/authCompany/updatePassword
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho
 Content-Type: application/json
 

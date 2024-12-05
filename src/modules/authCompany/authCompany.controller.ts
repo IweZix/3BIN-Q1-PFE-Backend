@@ -84,7 +84,7 @@ export class AuthCompanyController {
      * @param token The token of the company.
      * @returns {Promise<{success: boolean, message: string}>} The result of the update.
      */
-    @Patch('update-password')
+    @Patch('updatePassword')
     @HttpCode(200)
     async updatePasswordCompany(
         @Body('password', new ValidationPipe()) password: string,
