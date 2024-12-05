@@ -3,7 +3,7 @@ import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 export class RegisteAdminDTO {
     @IsString()
     @IsNotEmpty()
-    name: string
+    name: string;
 
     @IsEmail()
     @IsNotEmpty()

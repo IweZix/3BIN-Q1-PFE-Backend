@@ -108,8 +108,8 @@ export class AuthController {
     @Post('answerFormUser')
     @HttpCode(201)
     async postAnswerFormUser(
-        @Body('email',new ValidationPipe()) email: string,
-        @Body('answers',new ValidationPipe()) answers: QuestionAnswer[],
+        @Body('email', new ValidationPipe()) email: string,
+        @Body('answers', new ValidationPipe()) answers: QuestionAnswer[],
         @Headers('Authorization') token: string,
     ): Promise<void> {
         this.userService.verify(token);

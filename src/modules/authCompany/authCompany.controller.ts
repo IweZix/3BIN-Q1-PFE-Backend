@@ -1,4 +1,15 @@
-import { Body, ConflictException, Controller, HttpCode, NotFoundException, Patch, Post, ValidationPipe, UnauthorizedException ,Headers} from '@nestjs/common';
+import {
+    Body,
+    ConflictException,
+    Controller,
+    HttpCode,
+    NotFoundException,
+    Patch,
+    Post,
+    ValidationPipe,
+    UnauthorizedException,
+    Headers,
+} from '@nestjs/common';
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
@@ -77,7 +88,7 @@ export class AuthCompanyController {
     @HttpCode(200)
     async updatePasswordCompany(
         @Body('password', new ValidationPipe()) password: string,
-       @Headers('Authorization') token: string,
+        @Headers('Authorization') token: string,
     ): Promise<{ success: boolean; message: string }> {
         const decoded = await this.authCompanyService.verify(token);
         const email = decoded.email;
@@ -89,7 +100,4 @@ export class AuthCompanyController {
             message: 'Password updated successfully',
         };
     }
-
-
-
 }

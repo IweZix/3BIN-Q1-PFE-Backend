@@ -147,15 +147,13 @@ export class AuthCompanyService {
                         );
                     }
                 }
-                question.responsesList = question.responsesList.filter(
-                    (response: Answer): Boolean => {
-                        if (response.txt_answer === 'N/A') {
-                            response.isNow = true;
-                            return true;
-                        }
-                        return false;
-                    },
-                );
+                question.responsesList = question.responsesList.filter((response: Answer): Boolean => {
+                    if (response.txt_answer === 'N/A') {
+                        response.isNow = true;
+                        return true;
+                    }
+                    return false;
+                });
             }
             answerQuestion.questionsList = answerQuestion.questionsList.filter(
                 question => question.responsesList.length > 0,

@@ -17,7 +17,8 @@ const {
     MONGO_HOST_PROD,
 } = process.env;
 
-if (!BCRYPT_SALT_ROUNDS ||
+if (
+    !BCRYPT_SALT_ROUNDS ||
     !JWT_SECRET ||
     !JWT_LIFETIME ||
     !MONGO_USER ||
