@@ -109,4 +109,13 @@ export class AuthService {
         }
         return company.questions;
     }
+
+    public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {
+        const company: Company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.questions = answers;
+        await this.companyModel.replaceOne({ email: email }, company).exec();
+    }
 }

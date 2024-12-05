@@ -91,7 +91,7 @@ export class AuthController {
         return await this.userService.verifyPasswordUpdated(user);
     }
 
-    @Get('getAnswerFormUser')
+    @Get('answerFormUser')
     @HttpCode(200)
     async getAnswerFormUser(
         @Body('email') email: string,
@@ -100,6 +100,21 @@ export class AuthController {
         this.userService.verify(token);
         try {
             return this.userService.getAnswerFormUser(email);
+        } catch (error) {
+            throw new NotFoundException('User not found');
+        }
+    }
+
+    @Post('answerFormUser')
+    @HttpCode(201)
+    async postAnswerFormUser(
+        @Body('email') email: string,
+        @Body('answers') answers: QuestionAnswer[],
+        @Headers('Authorization') token: string,
+    ): Promise<void> {
+        this.userService.verify(token);
+        try {
+            this.userService.postAnswerFormUser(email, answers);
         } catch (error) {
             throw new NotFoundException('User not found');
         }
