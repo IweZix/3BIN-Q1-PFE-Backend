@@ -3,7 +3,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './modules/database/db.module';
 import { AuthCompanyModule } from './modules/authCompany/authCompany.module';
 import { QuestionModule } from './modules/question/question.module';
-import { TemplateModule } from './modules/template/template.modules';
+import { TemplateModule } from './modules/template/template.module';
 
 /**
  * The AppModule is the root module of the application.
