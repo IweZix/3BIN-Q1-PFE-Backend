@@ -168,6 +168,12 @@ export class AuthCompanyService {
         return allNAQuestions;
     }
 
+    /**
+     * Update the password of a company
+     * @param {string} email The email of the company
+     * @param {string} password The new password
+     * @return {Promise<boolean>} True if the password is updated, false otherwise
+     */
     public async updatePassword(email: string, password: string): Promise<boolean> {
         const hashedPassword = await bcrypt.hash(password, this.SALT_ROUNDS);
         const company = await this.companyModel.findOne({ email }).exec();
