@@ -9,7 +9,7 @@ import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { LoginDTO } from '../../dto/LoginDTO';
 import { QuestionService } from '../question/question.service';
 import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
-import { Answer } from "../../schemas/answer.schema";
+import { Answer } from '../../schemas/answer.schema';
 
 @Injectable()
 export class AuthCompanyService {
@@ -27,7 +27,6 @@ export class AuthCompanyService {
         const hashedPassword = await bcrypt.hash(company.password, this.SALT_ROUNDS);
         const newCompany = new this.companyModel({
             ...company,
-            password: hashedPassword,
             questions: await this.arrangeTemplate(company),
             isPasswordUpdated: false,
         });
@@ -80,21 +79,41 @@ export class AuthCompanyService {
                 }
             }
             answerQuestion.questionsList = answerQuestion.questionsList.filter(
-                (question) => question.responsesList.length > 0
+                question => question.responsesList.length > 0,
             );
         }
 
-        allQuestions = allQuestions.filter((questionAnswer) => questionAnswer.questionsList.length > 0);
+        allQuestions = allQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
 
         return allQuestions;
     }
 
-     /**
+    /**
+     * Get a user email by a token
+     * @param token The token to get the userId from.
+     * @returns {Promise<string>} The userId.
+     */
+    public async getUserByToken(token: string): Promise<string> {
+        const decoded = jwt.verify(token, this.JWT_SECRET);
+        return decoded.email;
+    }
+
+    public async answerForm(answerForm: QuestionAnswer[], email: string): Promise<void> {
+        let company: Company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.questions = answerForm;
+        console.log(answerForm);
+        await this.companyModel.replaceOne({ email: email }, company).exec();
+    }
+
+    /**
      * Verify if the password is updated.
      * @param company The company.
      * @returns {Promise<boolean>} True if the password is updated, false otherwise.
      */
-     public async verifyPasswordUpdated(company: Company): Promise<boolean> {
+    public async verifyPasswordUpdated(company: Company): Promise<boolean> {
         return company.isPasswordUpdated;
     }
 }
