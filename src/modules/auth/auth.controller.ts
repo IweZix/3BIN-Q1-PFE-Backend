@@ -8,6 +8,7 @@ import {
     ValidationPipe,
     Get,
     Headers,
+    Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
@@ -118,5 +119,30 @@ export class AuthController {
         } catch (error) {
             throw new NotFoundException('User not found');
         }
+    }
+
+
+    /**
+     * Update the password of a user.
+     * @param password The new password.
+     * @param token The token to update the password.
+     * @returns {Promise<{ success: boolean; message: string }>} The result of the update.
+     */
+    @Patch('update-password')
+    @HttpCode(200)
+    async updatePasswordAdmin(
+        @Body('password', new ValidationPipe()) password: string,
+        @Headers('Authorization') token: string,
+    ): Promise<{ success: boolean; message: string }> {
+        const decoded = await this.userService.verify(token);
+        const email = decoded.email;
+
+        await this.userService.updatePasswordAdmin(email, password);
+
+        return {
+            success: true,
+            message: 'Password updated successfully',
+        };
+        
     }
 }

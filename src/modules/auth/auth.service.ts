@@ -118,4 +118,22 @@ export class AuthService {
         company.questions = answers;
         await this.companyModel.replaceOne({ email: email }, company).exec();
     }
+
+    /**
+     * Update the password of a user.
+     * @param email The email of the user.
+     * @param password The new password.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+    public async updatePasswordAdmin(email: string, password: string): Promise<boolean> {
+        const hashedPassword = await bcrypt.hash(password, this.SALT_ROUNDS);
+        const admin = await this.userModel.findOne({ email }).exec();
+        if (!admin) {
+            throw new Error('admin not found');
+        }
+        admin.password = hashedPassword;
+        admin.isPasswordUpdated = true;
+        await admin.save();
+        return true;
+    }
 }
