@@ -72,7 +72,7 @@ export class AuthController {
      */
     @Post('verify-admin')
     @HttpCode(200)
-    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Admin> {
+    async verify(@Headers('Authorization') token: string): Promise<Admin> {
         return this.userService.verify(token);
     }
 
@@ -108,8 +108,8 @@ export class AuthController {
     @Post('answerFormUser')
     @HttpCode(201)
     async postAnswerFormUser(
-        @Body('email') email: string,
-        @Body('answers') answers: QuestionAnswer[],
+        @Body('email',new ValidationPipe()) email: string,
+        @Body('answers',new ValidationPipe()) answers: QuestionAnswer[],
         @Headers('Authorization') token: string,
     ): Promise<void> {
         this.userService.verify(token);

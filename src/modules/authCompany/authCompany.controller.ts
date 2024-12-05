@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, HttpCode, NotFoundException, Patch, Post, ValidationPipe, UnauthorizedException } from '@nestjs/common';
+import { Body, ConflictException, Controller, HttpCode, NotFoundException, Patch, Post, ValidationPipe, UnauthorizedException ,Headers} from '@nestjs/common';
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
@@ -35,7 +35,7 @@ export class AuthCompanyController {
 
     @Post('verify-company')
     @HttpCode(200)
-    async verify(@Body('token', new ValidationPipe()) token: string): Promise<Company> {
+    async verify(@Headers('Authorization') token: string): Promise<Company> {
         return this.authCompanyService.verify(token);
     }
 
@@ -43,7 +43,7 @@ export class AuthCompanyController {
     @HttpCode(201)
     async answerForm(
         @Body('listQuestions') question: QuestionAnswer[],
-        @Body('token', new ValidationPipe()) token: string,
+        @Headers('Authorization') token: string,
     ): Promise<void> {
         const email = await this.authCompanyService.getUserByToken(token);
         if (!email) {
@@ -77,7 +77,7 @@ export class AuthCompanyController {
     @HttpCode(200)
     async updatePasswordCompany(
         @Body('password', new ValidationPipe()) password: string,
-        @Body('token', new ValidationPipe()) token: string,
+       @Headers('Authorization') token: string,
     ): Promise<{ success: boolean; message: string }> {
         const decoded = await this.authCompanyService.verify(token);
         const email = decoded.email;
