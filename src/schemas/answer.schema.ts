@@ -26,4 +26,7 @@ export class Answer extends Document {
 
     @Prop({ required: true })
     template: string;
+
+    @Prop({ required: true, type: Boolean, default: false })
+    isValidated: boolean;
 }

@@ -35,10 +35,641 @@ Content-Type: application/json
 }
 
 ###Get a form of a user by email
-GET {{baseUrl}}/authAdmin/getAnswerFormUser
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQwNTk3MywiZXhwIjoxODE5ODA1OTczfQ.dP13d12ucXLURkKvW-iVTzYbfeonJjglkY_xH3P5mCw
+GET {{baseUrl}}/authAdmin/answerFormUser
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQxMTAxOCwiZXhwIjoxODE5ODExMDE4fQ.s9pPuRn6_VOqIHJvY3fk6pLjXvKyiP2apzk0dtRyllQ
 Content-Type: application/json
 
 {
   "email": "contact@steam.com"
 }
+
+###Post a form of a user by email
+POST {{baseUrl}}/authAdmin/answerFormUser
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQxMTAxOCwiZXhwIjoxODE5ODExMDE4fQ.s9pPuRn6_VOqIHJvY3fk6pLjXvKyiP2apzk0dtRyllQ
+Content-Type: application/json
+
+{
+  "email": "contact@steam.com",
+  "answers": [
+  {
+    "_id": "67504037914ca8677cd27f7d",
+    "issue_id": 1,
+    "questionsList": [
+      {
+        "txt": "Suivez-vous la consommation d'énergie de XXX ?",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Oui",
+            "comment": "ON SAIS PAS ILS SONT PEUT ETRE EN TRAIN DE LE FAIRE",
+            "isNow": true,
+            "is2years": false,
+            "scoreNow": 2,
+            "score2": 0.5,
+            "isValidated": true
+          },
+          {
+            "template": "0",
+            "txt_answer": "Non",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 1
+      },
+      {
+        "txt": "Avez-vous un contrat vert avec votre fournisseur d'énergie ?",
+        "responsesList": [
+          {
+            "template": "1",
+            "txt_answer": "Oui",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "Non",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "1",
+            "txt_answer": "Je ne sais pas",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "1",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.5,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0.5
+      },
+      {
+        "txt": "Produisez-vous de l'électricité sur site (par exemple, avec des panneaux solaires) ?",
+        "responsesList": [
+          {
+            "template": "1",
+            "txt_answer": "Oui",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "Non",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "1",
+            "txt_answer": "Je ne sais pas",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "1",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.5,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0.5
+      },
+      {
+        "txt": "Qu'avez-vous mis en place pour limiter votre consommation d'énergie ? Veuillez sélectionner toutes les réponses applicables.",
+        "responsesList": [
+          {
+            "template": "1",
+            "txt_answer": "Nous avons investi dans des équipements de bureau économes en énergie, notamment des ordinateurs, des imprimantes, etc.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "Nous avons remplacé les ampoules traditionnelles par des ampoules LED à haut rendement énergétique afin de réduire la consommation d'électricité.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "Nous avons installé des thermostats intelligents pour optimiser les systèmes de chauffage, de ventilation et de climatisation (CVC) en vue d'une meilleure efficacité énergétique.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "",
+            "comment": "Nous réalisons régulièrement des audits énergétiques afin d'identifier les points à améliorer et d'optimiser notre consommation d'énergie.",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "",
+            "comment": "Nous avons installé des détecteurs de présence pour l'éclairage et les systèmes CVC afin d'ajuster automatiquement la consommation en fonction des niveaux d'occupation.",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1,
+            "score2": 0.25
+          },
+          {
+            "template": "1",
+            "txt_answer": "Autre : veuillez expliquer dans les commentaires",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "",
+            "txt_answer": "Aucune de ces réponses.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 2.5,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 2.5
+      }
+    ]
+  },
+  {
+    "_id": "6750423c914ca8677cd27f80",
+    "issue_id": 2,
+    "questionsList": [
+      {
+        "txt": "Avez-vous calculé l'empreinte carbone des activités de XXX ?",
+        "responsesList": [
+          {
+            "template": "",
+            "txt_answer": "Oui, pour les Scopes 1 & 2 (les émissions de gaz à effet de serre directes et indirectes liées à notre consommation d'énergie).",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.5,
+            "score2": 0.13
+          },
+          {
+            "template": "",
+            "txt_answer": "Oui, pour le Scope 3 (toutes les émissions de GES indirectes liées à nos activités).",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1.5,
+            "score2": 0.38
+          },
+          {
+            "template": "",
+            "txt_answer": "Non",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 1
+      },
+      {
+        "txt": "Si vous la calculez, veuillez indiquer votre empreinte carbone de Scope 1 (en tonnes de CO2 équivalent) :",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0
+      },
+      {
+        "txt": "Si vous la calculez, veuillez indiquer votre empreinte carbone de Scope 2 (en tonnes de CO2 équivalent) :",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0
+      },
+      {
+        "txt": "Si vous la calculez, veuillez indiquer votre empreinte carbone de Scope 3 (en tonnes de CO2 équivalent) :",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0
+      },
+      {
+        "txt": "Si vous avez réalisé un rapport d'empreinte carbone pour XXX, que comprend-il ? Veuillez sélectionner toutes les réponses applicables.",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Nous n'avons pas réalisé de rapport d'empreinte carbone.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "Notre rapport d'empreinte carbone inclut une déclaration claire de notre engagement en faveur de la réduction de notre empreinte carbone.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Notre rapport d'empreinte carbone présente une ventilation des émissions de carbone par source ou catégorie.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Notre rapport d'empreinte carbone décrit de manière transparente la méthodologie utilisée, le champ d'application, le processus de collecte de données, les hypothèses, les incertitudes et les limites du calcul.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Notre rapport d'empreinte carbone présente nos objectifs de réduction et décrit les mesures prises pour les atteindre.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Notre rapport d'empreinte carbone est conforme à la méthodologie Bilan Carbone® et/ou au GHG Protocol (il a été réalisé via un expert et/ou une plateforme agréé).",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous partageons publiquement notre rapport d'empreinte carbone complet (en ce compris tous les points cochés ci-dessus).",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 1.26,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 1.26
+      },
+      {
+        "txt": "Quelle(s) pratique(s) avez-vous mise(s) en place pour limiter votre empreinte carbone ?",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Nous choisissons en priorité des fournisseurs qui adoptent les meilleures pratiques en matière de durabilité.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous avons une politique d'achats responsables, qui formalise notre engagement à privilégier les matières premières recyclées ou renouvelables et à réduire les déchets à la source.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Autre : veuillez expliquer dans les commentaires",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "Aucune de ces réponses.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.63,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0.63
+      },
+      {
+        "txt": "Quel pourcentage de vos fournisseurs (en valeur monétaire) se trouvent à moins de 80 km de vos installations ?",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Je ne sais pas",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "<20%",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "20-39%",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.21,
+            "score2": 0.05
+          },
+          {
+            "template": "0",
+            "txt_answer": "40-59%",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.32,
+            "score2": 0.08
+          },
+          {
+            "template": "0",
+            "txt_answer": "60%+",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0.21
+      },
+      {
+        "txt": "Quelle(s) mesure(s) avez-vous prise(s) avec vos fournisseurs pour limiter les émissions carbones liées à votre chaîne d'approvisionnement ?",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Nous intégrons des critères environnementaux dans nos contrats fournisseurs, afin de les inciter à adopter des pratiques durables.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous réalisons régulièrement des audits environnementaux afin d'évaluer les performances environnementales de nos fournisseurs.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous procédons à des audits environnementaux réguliers afin d'évaluer les performances écologiques de nos fournisseurs.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous incitons nos fournisseurs à opter pour des solutions de transport bas carbone pour la livraison des marchandises.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous entretenons un dialogue ouvert avec nos fournisseurs et encourageons le partage des meilleures pratiques en matière de durabilité.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous travaillons en étroite collaboration avec les fournisseurs dès la phase de conception afin d'intégrer notamment les principes d'éco-conception, favorisant la durabilité et la recyclabilité.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.42,
+            "score2": 0.11
+          },
+          {
+            "template": "0",
+            "txt_answer": "Autre : veuillez expliquer dans les commentaires",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "Aucune de ces réponses.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 0.42
+      }
+    ]
+  },
+  {
+    "_id": "67504902914ca8677cd27f82",
+    "issue_id": 3,
+    "questionsList": [
+      {
+        "txt": "XXX a-t-elle pris l'une ou plusieurs de ces mesures concernant la consommation d'eau dans sa chaine d'approvisionnement ?",
+        "responsesList": [
+          {
+            "template": "0",
+            "txt_answer": "Nous avons réalisé une analyse de notre chaîne de valeur, incluant nos fournisseurs, services et matériaux, afin de repérer les principaux domaines où l'eau est utilisée.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.89,
+            "score2": 0.22
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous avons défini des objectifs pour réduire l'empreinte hydrique de notre chaîne d'approvisionnement.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.89,
+            "score2": 0.22
+          },
+          {
+            "template": "0",
+            "txt_answer": "Nous collaborons avec nos fournisseurs et les encourageons à collecter des données et à publier leur empreinte hydrique.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0.89,
+            "score2": 0.22
+          },
+          {
+            "template": "0",
+            "txt_answer": "Autre : veuillez expliquer dans les commentaires",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "Aucune de ces réponses.",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          },
+          {
+            "template": "0",
+            "txt_answer": "N/A",
+            "comment": "",
+            "isNow": false,
+            "is2years": false,
+            "scoreNow": 0,
+            "score2": 0
+          }
+        ],
+        "scoreTotal": 1.33
+      }
+    ]
+  }
+]
+
+  }
