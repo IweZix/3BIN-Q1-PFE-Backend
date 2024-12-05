@@ -22,6 +22,10 @@ export class AuthCompanyService {
         private readonly questionService: QuestionService,
     ) {}
 
+    /**
+     * Register a company
+     * @param company
+     */
     public async register(company: RegisterCompanyDTO): Promise<Company> {
         company.template.push(0);
         const hashedPassword = await bcrypt.hash(company.password, this.SALT_ROUNDS);
@@ -68,6 +72,35 @@ export class AuthCompanyService {
     }
 
     /**
+     * Get a user email by a token
+     * @param token The token to get the userId from.
+     * @returns {Promise<string>} The userId.
+     */
+    public async getUserByToken(token: string): Promise<string> {
+        const decoded = jwt.verify(token, this.JWT_SECRET);
+        return decoded.email;
+    }
+
+    public async answerForm(answerForm: QuestionAnswer[], email: string): Promise<void> {
+        let company: Company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.questions = answerForm;
+        console.log(answerForm);
+        await this.companyModel.replaceOne({ email: email }, company).exec();
+    }
+
+    /**
+     * Verify if the password is updated.
+     * @param company The company.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+    public async verifyPasswordUpdated(company: Company): Promise<boolean> {
+        return company.isPasswordUpdated;
+    }
+
+    /**
      * Get all questions that the company has
      * @param {RegisterCompanyDTO} company The company
      * @return {Promise<QuestionAnswer[]>} The questions that the company has
@@ -84,6 +117,9 @@ export class AuthCompanyService {
                         );
                     }
                 }
+                question.responsesList = question.responsesList.filter(
+                    (response: Answer): Boolean => response.txt_answer !== 'N/A',
+                );
             }
             answerQuestion.questionsList = answerQuestion.questionsList.filter(
                 question => question.responsesList.length > 0,
@@ -112,6 +148,15 @@ export class AuthCompanyService {
                         );
                     }
                 }
+                question.responsesList = question.responsesList.filter(
+                    (response: Answer): Boolean => {
+                        if (response.txt_answer === 'N/A') {
+                            response.isNow = true;
+                            return true;
+                        }
+                        return false;
+                    },
+                );
             }
             answerQuestion.questionsList = answerQuestion.questionsList.filter(
                 question => question.responsesList.length > 0,
@@ -121,34 +166,5 @@ export class AuthCompanyService {
         allNAQuestions = allNAQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
 
         return allNAQuestions;
-    }
-
-    /**
-     * Get a user email by a token
-     * @param token The token to get the userId from.
-     * @returns {Promise<string>} The userId.
-     */
-    public async getUserByToken(token: string): Promise<string> {
-        const decoded = jwt.verify(token, this.JWT_SECRET);
-        return decoded.email;
-    }
-
-    public async answerForm(answerForm: QuestionAnswer[], email: string): Promise<void> {
-        let company: Company = await this.companyModel.findOne({ email: email }).exec();
-        if (!company) {
-            throw new Error('Company not found');
-        }
-        company.questions = answerForm;
-        console.log(answerForm);
-        await this.companyModel.replaceOne({ email: email }, company).exec();
-    }
-
-    /**
-     * Verify if the password is updated.
-     * @param company The company.
-     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
-     */
-    public async verifyPasswordUpdated(company: Company): Promise<boolean> {
-        return company.isPasswordUpdated;
     }
 }

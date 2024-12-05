@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 @Schema()
 export class Answer extends Document {
     @Prop({ required: true })
-    textAnswer: string;
+    txt_answer: string;
 
     @Prop({ required: true })
     comment: string;
