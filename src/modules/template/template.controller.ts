@@ -1,5 +1,5 @@
 import { Controller, Get, Post, HttpCode, Body, ConflictException } from '@nestjs/common';
-import { TemplateService } from './template.services';
+import { TemplateService } from './template.service';
 import { Template } from '../../schemas/template.schema';
 import { ValidationPipe } from '@nestjs/common';
 

@@ -24,7 +24,7 @@ POST {{baseUrl}}/authAdmin/verify-admin
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQwNTk3MywiZXhwIjoxODE5ODA1OTczfQ.dP13d12ucXLURkKvW-iVTzYbfeonJjglkY_xH3P5mCw"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQxNzA2OCwiZXhwIjoxODE5ODE3MDY4fQ.WDby6Gzg3FHKuWllbUDOMwlG155x6dBtZvYo05rYTPg"
   }
 ### Verify PasswordUpdated
 POST {{baseUrl}}/authAdmin/verify-password-updated
