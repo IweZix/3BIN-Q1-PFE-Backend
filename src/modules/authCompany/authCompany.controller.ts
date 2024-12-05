@@ -16,10 +16,10 @@ export class AuthCompanyController {
     @Post('register-company')
     @HttpCode(201)
     async registerCompany(@Body(new ValidationPipe()) company: RegisterCompanyDTO): Promise<Company> {
-        /*const companyFound: Company = await this.authCompanyService.getCompanyByEmail(company.email);
+        const companyFound: Company = await this.authCompanyService.getCompanyByEmail(company.email);
         if (companyFound) {
             throw new ConflictException('Company already exists');
-        }*/
+        }
         return this.authCompanyService.register(company);
     }
 
