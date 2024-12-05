@@ -26,3 +26,11 @@ Content-Type: application/json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzIzNTM2MCwiZXhwIjoxODE5NjM1MzYwfQ.GDLdf46hMwiH1gN69TncioQZDTBR84c4-uJ5ixQFW6w"
 }
+
+### Verify PasswordUpdated
+POST {{baseUrl}}/authAdmin/verify-password-updated
+Content-Type: application/json
+
+{
+  "email": "john.doe@gmail.com"
+}

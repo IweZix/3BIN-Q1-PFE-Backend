@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, HttpCode, Post, ValidationPipe } from '@nestjs/common';
+import { Body, ConflictException, Controller, HttpCode, NotFoundException, Post, ValidationPipe } from '@nestjs/common';
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
@@ -36,5 +36,20 @@ export class AuthCompanyController {
     @HttpCode(200)
     async verify(@Body('token', new ValidationPipe()) token: string): Promise<Company> {
         return this.authCompanyService.verify(token);
+    }
+
+    /**
+     * Verify password updated.
+     * @param email The email of the company.
+     * @returns {Promise<boolean>} True if the password is updated, false otherwise.
+     */
+    @Post('verify-password-updated')
+    @HttpCode(200)
+    async verifyPasswordUpdated(@Body('email', new ValidationPipe()) email: string): Promise<boolean> {
+        const company = await this.authCompanyService.getCompanyByEmail(email);
+        if (!company) {
+            throw new NotFoundException('Company not found');
+        }
+        return await this.authCompanyService.verifyPasswordUpdated(company);
     }
 }

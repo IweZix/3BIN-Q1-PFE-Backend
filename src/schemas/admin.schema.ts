@@ -15,6 +15,9 @@ export class Admin extends Document {
 
     @Prop({ required: true })
     password: string;
+
+    @Prop({ required: true })
+    isPasswordUpdated: boolean;
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin);
