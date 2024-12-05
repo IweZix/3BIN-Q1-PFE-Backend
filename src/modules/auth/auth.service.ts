@@ -7,6 +7,8 @@ import { config } from 'src/utils/config';
 import { Admin } from 'src/schemas/admin.schema';
 import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
+import { QuestionAnswer } from 'src/schemas/questionAnswer.schema';
+import { Company } from 'src/schemas/company.schema';
 
 /**
  * The auth service.
@@ -21,7 +23,10 @@ export class AuthService {
      * The constructor of the auth service.
      * @param userModel The auth model.
      */
-    public constructor(@InjectModel(Admin.name) private userModel: Model<Admin>) {}
+    public constructor(
+        @InjectModel(Admin.name) private userModel: Model<Admin>,
+        @InjectModel(Company.name) private companyModel: Model<Company>,
+    ) {}
 
     /**
      * Create a new admin.
@@ -73,6 +78,8 @@ export class AuthService {
             const { password, ...userWithoutPassword } = user.toObject();
             return userWithoutPassword;
         } catch (error: any) {
+            console.log(token);
+
             throw new UnauthorizedException('Invalid token', error.message);
         }
     }
@@ -93,5 +100,13 @@ export class AuthService {
      */
     public async verifyPasswordUpdated(user: Admin): Promise<boolean> {
         return user.isPasswordUpdated;
+    }
+
+    public async getAnswerFormUser(email: string): Promise<QuestionAnswer[]> {
+        const company: Company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        return company.questions;
     }
 }

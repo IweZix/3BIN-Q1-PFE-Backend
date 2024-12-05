@@ -24,13 +24,21 @@ POST {{baseUrl}}/authAdmin/verify-admin
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzIzNTM2MCwiZXhwIjoxODE5NjM1MzYwfQ.GDLdf46hMwiH1gN69TncioQZDTBR84c4-uJ5ixQFW6w"
-}
-
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQwNTk3MywiZXhwIjoxODE5ODA1OTczfQ.dP13d12ucXLURkKvW-iVTzYbfeonJjglkY_xH3P5mCw"
+  }
 ### Verify PasswordUpdated
 POST {{baseUrl}}/authAdmin/verify-password-updated
 Content-Type: application/json
 
 {
   "email": "john.doe@gmail.com"
+}
+
+###Get a form of a user by email
+GET {{baseUrl}}/authAdmin/getAnswerFormUser
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQwNTk3MywiZXhwIjoxODE5ODA1OTczfQ.dP13d12ucXLURkKvW-iVTzYbfeonJjglkY_xH3P5mCw
+Content-Type: application/json
+
+{
+  "email": "contact@steam.com"
 }

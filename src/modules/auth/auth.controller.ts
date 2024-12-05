@@ -1,8 +1,19 @@
-import { Body, ConflictException, Controller, HttpCode, NotFoundException, Post, ValidationPipe } from '@nestjs/common';
+import {
+    Body,
+    ConflictException,
+    Controller,
+    HttpCode,
+    NotFoundException,
+    Post,
+    ValidationPipe,
+    Get,
+    Headers,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
 import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
+import { QuestionAnswer } from 'src/schemas/questionAnswer.schema';
 
 /**
  * The controller for the auth module.
@@ -78,5 +89,19 @@ export class AuthController {
             throw new NotFoundException('User not found');
         }
         return await this.userService.verifyPasswordUpdated(user);
+    }
+
+    @Get('getAnswerFormUser')
+    @HttpCode(200)
+    async getAnswerFormUser(
+        @Body('email') email: string,
+        @Headers('Authorization') token: string,
+    ): Promise<QuestionAnswer[]> {
+        this.userService.verify(token);
+        try {
+            return this.userService.getAnswerFormUser(email);
+        } catch (error) {
+            throw new NotFoundException('User not found');
+        }
     }
 }
