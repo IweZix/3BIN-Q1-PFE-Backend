@@ -78,8 +78,6 @@ export class AuthService {
             const { password, ...userWithoutPassword } = user.toObject();
             return userWithoutPassword;
         } catch (error: any) {
-            console.log(token);
-
             throw new UnauthorizedException('Invalid token', error.message);
         }
     }
