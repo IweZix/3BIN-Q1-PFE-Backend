@@ -671,3 +671,22 @@ Content-Type: application/json
 ]
 
   }
+
+
+### update password of an admin
+PATCH  {{baseUrl}}/authAdmin/update-password
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQzMjgwOCwiZXhwIjoxODE5ODMyODA4fQ.4AjNHeu9VhNPoHzJXU4UJ49z2DxnRZhTPlkeQvcHQVc
+Content-Type: application/json
+
+{
+  "password": "password"
+}
+
+### Login after password update
+POST {{baseUrl}}/authAdmin/login-admin
+Content-Type: application/json
+
+{
+  "email": "john.doe@gmail.com",
+  "password": "password"
+}
