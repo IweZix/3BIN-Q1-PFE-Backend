@@ -94,10 +94,4 @@ export class AuthService {
     public async verifyPasswordUpdated(user: Admin): Promise<boolean> {
         return user.isPasswordUpdated;
     }
-
-
-
-
-
-
 }

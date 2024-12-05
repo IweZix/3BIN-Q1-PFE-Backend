@@ -9,7 +9,6 @@ import { Document } from 'mongoose';
 export class Template extends Document {
     @Prop({ required: true })
     templateName: string;
-
 }
 
 export const TemplateSchema = SchemaFactory.createForClass(Template);

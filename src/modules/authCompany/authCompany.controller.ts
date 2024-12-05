@@ -2,8 +2,7 @@ import { Body, ConflictException, Controller, HttpCode, NotFoundException, Post,
 import { AuthCompanyService } from './authCompany.service';
 import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
-import {  QuestionAnswer } from '../../schemas/questionAnswer.schema';
-import {  QuestionAnswer } from '../../schemas/questionAnswer.schema';
+import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
 import { LoginDTO } from '../../dto/LoginDTO';
 
 @Controller('authCompany')
@@ -40,12 +39,17 @@ export class AuthCompanyController {
         return this.authCompanyService.verify(token);
     }
 
-    @Post('/answerForm')
+    @Post('answerForm')
     @HttpCode(201)
-    async answerForm(@Body('answerForm') answerForm : QuestionAnswer[],
-    @Body('token', new ValidationPipe() )token:string ): Promise<void> {
-        const email=await this.authCompanyService.getUserByToken(token);
-        this.authCompanyService.answerForm(answerForm,email);
+    async answerForm(
+        @Body('listQuestions') question: QuestionAnswer[],
+        @Body('token', new ValidationPipe()) token: string,
+    ): Promise<void> {
+        const email = await this.authCompanyService.getUserByToken(token);
+        if (!email) {
+            throw new NotFoundException('Company not found');
+        }
+        this.authCompanyService.answerForm(question, email);
     }
 
     /**
