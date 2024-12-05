@@ -664,3 +664,21 @@ Content-Type: application/json
     }
   ],
   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDEwODAyLCJleHAiOjE4MTk4MTA4MDJ9.eyKpYovOlAnRHoAg_m4FkR4W0EI94ASGJfr7weV3s1Q"}
+
+###update password authCompany 
+PATCH {{baseUrl}}/authCompany/update-password
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDE3MDk0LCJleHAiOjE4MTk4MTcwOTR9.zPxx4ys7Wx35OghNJ7rSl2FPZlq66Rh0OS0SKVbwDGM",
+  "password": "passwordChanged"
+}
+
+### Login
+POST {{baseUrl}}/authCompany/login-company
+Content-Type: application/json
+
+{
+  "email": "contact@steam.com",
+  "password": "passwordChanged"
+}
