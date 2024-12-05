@@ -25,9 +25,9 @@ export class AuthCompanyService {
     public async register(company: RegisterCompanyDTO): Promise<Company> {
         company.template.push(0);
         const hashedPassword = await bcrypt.hash(company.password, this.SALT_ROUNDS);
-        company.password = hashedPassword;
         const newCompany = new this.companyModel({
             ...company,
+            password: hashedPassword,
             questions: await this.arrangeTemplate(company),
             isPasswordUpdated: false,
         });
