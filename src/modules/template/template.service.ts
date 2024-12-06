@@ -22,4 +22,16 @@ export class TemplateService {
     public async getTemplateByName(templateName: string): Promise<Template> {
         return await this.TemplateModel.findOne({ templateName }).exec();
     }
+
+    public async deleteTemplateByName(templateName: string): Promise<void> {
+        await this.TemplateModel.deleteOne({ templateName }).exec();
+    }
+
+    public async updateTemplateName(templateName: string, newTemplateName: string): Promise<Template> {
+        return this.TemplateModel.findOneAndUpdate(
+            { templateName },
+            { templateName: newTemplateName },
+            { new: true }, // Return the updated document
+        ).exec();
+    }
 }
