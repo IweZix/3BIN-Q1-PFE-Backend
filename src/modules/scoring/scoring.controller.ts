@@ -4,24 +4,23 @@ import {
     Get,
     Header,
     Headers,
-    HttpCode, NotFoundException, Post,
+    HttpCode,
+    NotFoundException,
+    Post,
     UnauthorizedException,
-    ValidationPipe
-} from "@nestjs/common";
-import { ScoringService } from "./scoring.service";
-import { AuthCompanyService } from "../authCompany/authCompany.service";
+    ValidationPipe,
+} from '@nestjs/common';
+import { ScoringService } from './scoring.service';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('scoring')
 export class ScoringController {
     private readonly scoringService: ScoringService;
-    private readonly authCompanyService: AuthCompanyService;
+    private readonly authservice: AuthService;
 
-    public constructor(
-        scoringService: ScoringService,
-        authCompanyService: AuthCompanyService,
-    ) {
+    public constructor(scoringService: ScoringService, authservice: AuthService) {
         this.scoringService = scoringService;
-        this.authCompanyService = authCompanyService;
+        this.authservice = authservice;
     }
 
     @Post()
@@ -30,7 +29,7 @@ export class ScoringController {
         @Body('email', new ValidationPipe()) email: string,
         @Headers('Authorization') token: string,
     ): Promise<any> {
-        // verify token
+        this.authservice.verify(token);
         if (!email) {
             throw new NotFoundException('Invalid email');
         }
@@ -43,7 +42,7 @@ export class ScoringController {
         @Body('email', new ValidationPipe()) email: string,
         @Headers('Authorization') token: string,
     ): Promise<any> {
-        // verify token
+        this.authservice.verify(token);
         if (!email) {
             throw new NotFoundException('Invalid email');
         }
