@@ -1,13 +1,13 @@
 import { Controller, Get, Post, HttpCode, Body, ConflictException } from '@nestjs/common';
-import { Issueservice } from './issue.service';
+import { IssueService } from './issue.service';
 import { Issue } from '../../schemas/issue.schema';
 import { ValidationPipe } from '@nestjs/common';
 
 @Controller('issue')
 export class IssueController {
-    private readonly issueService: Issueservice;
+    private readonly issueService: IssueService;
 
-    public constructor(issueService: Issueservice) {
+    public constructor(issueService: IssueService) {
         this.issueService = issueService;
     }
 
