@@ -36,18 +36,19 @@ export class ScoringController {
         }
         return this.scoringService.calculateScore(email);
     }
+
     @Get(':email') // Capture dynamique de l'email dans l'URL
     @HttpCode(200)
     async getScoresTotal(
-        @Param('email') email: string, // Extraction du paramètre depuis l'URL
+        @Param('email') email: string,
         @Headers('Authorization') token: string,
     ): Promise<any> {
-        this.authservice.verify(token); // Vérification du token
+        this.authservice.verify(token); 
 
         if (!email) {
             throw new NotFoundException('Email is required');
         }
 
-        return this.scoringService.getScoresTotal(email); // Retourne les scores
+        return this.scoringService.getScoresTotal(email);
     }
 }
