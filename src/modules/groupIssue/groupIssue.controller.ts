@@ -2,7 +2,6 @@ import { Controller, Get, Post, HttpCode, Body, ConflictException } from '@nestj
 import { GroupIssueService } from './groupIssue.service';
 import { GroupIssue } from '../../schemas/groupIssue.schema';
 import { ValidationPipe } from '@nestjs/common';
-import { GroupIssueDTO } from 'src/dto/GroupIssueDTO';
 
 @Controller('groupIssue')
 export class GroupIssueController {
