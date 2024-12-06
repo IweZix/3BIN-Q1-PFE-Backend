@@ -1,19 +1,21 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Scoring } from "../../schemas/scoring.schema";
-import { Model } from "mongoose";
-import { AuthCompanyService } from "../authCompany/authCompany.service";
-import { QuestionAnswer } from "../../schemas/questionAnswer.schema";
-import { Company } from "../../schemas/company.schema";
-import { Answer } from "../../schemas/answer.schema";
-import { Question } from "../../schemas/question.schema";
-import { IssueScoring } from "../../schemas/issueScoring.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Scoring } from '../../schemas/scoring.schema';
+import { Model } from 'mongoose';
+import { AuthCompanyService } from '../authCompany/authCompany.service';
+import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
+import { Company } from '../../schemas/company.schema';
+import { Answer } from '../../schemas/answer.schema';
+import { Question } from '../../schemas/question.schema';
+import { IssueScoring } from '../../schemas/issueScoring.schema';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class ScoringService {
     public constructor(
         @InjectModel(Scoring.name) private ScoringModel: Model<Scoring>,
         @InjectModel(IssueScoring.name) private IssueScoringModel: Model<IssueScoring>,
+        private readonly authservice: AuthService,
         private readonly authCompanyService: AuthCompanyService,
     ) {}
 
@@ -72,7 +74,7 @@ export class ScoringService {
 
     private calculateTotalFromQuestion(question: Question): [number, number, number] {
         let scoreTotal = question.scoreTotal;
-        let [ score, score2Years ] = this.calculateScoreFromAnswers(question.responsesList);
+        let [score, score2Years] = this.calculateScoreFromAnswers(question.responsesList);
 
         return [score, score2Years, scoreTotal];
     }
