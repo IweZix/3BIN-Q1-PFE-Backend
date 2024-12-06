@@ -37,7 +37,7 @@ export class TemplateController {
         await this.templateService.deleteTemplateByName(TemplateDto.templateName);
     }
 
-    @Patch('Patch-templateName')
+    @Patch('patch-templateName')
     @HttpCode(200)
     async updateTemplateName(
         @Body('templateName') templateName: string,

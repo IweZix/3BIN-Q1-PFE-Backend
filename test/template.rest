@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ### Update Template Name
-PATCH {{baseUrl}}/template/Patch-templateName
+PATCH {{baseUrl}}/template/patch-templateName
 Content-Type: application/json
 
 {
