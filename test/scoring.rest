@@ -10,11 +10,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdt
 }
 
 ### Get scoring
-GET {{baseUrl}}/scoring
+GET {{baseUrl}}/scoring/email=contact@steam.com
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQ5MTMxNSwiZXhwIjoxODE5ODkxMzE1fQ.90fZbYy-iu1bzJKUtpzTNdKWFfqLPljWfa2ZtdjDfSA
 
-{
-  "email": "contact@steam.com"
-}
 
