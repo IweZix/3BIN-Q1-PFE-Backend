@@ -121,7 +121,6 @@ export class AuthController {
         }
     }
 
-
     /**
      * Update the password of a user.
      * @param password The new password.
@@ -143,6 +142,5 @@ export class AuthController {
             success: true,
             message: 'Password updated successfully',
         };
-        
     }
 }
