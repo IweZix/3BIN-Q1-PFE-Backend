@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+### Get All groupIssues
+GET {{baseUrl}}/groupIssue
+Content-Type: application/json
+
+### Create One groupIssue
+POST {{baseUrl}}/groupIssue/create-groupIssue
+Content-Type: application/json
+
+{
+    "groupIssueName": "New groupIssue Name"
+}
