@@ -9,5 +9,30 @@ POST {{baseUrl}}/template/create-template
 Content-Type: application/json
 
 {
-    "templateName": "New Template Name"
+    "templateName": "NewTemplateName"
+}
+
+### Create two Template
+POST {{baseUrl}}/template/create-template
+Content-Type: application/json
+
+{
+    "templateName": "NewTemplateName2"
+}
+
+### Delete Template by Name
+DELETE {{baseUrl}}/template/delete-template
+Content-Type: application/json
+
+{
+    "templateName": "NewTemplateName"
+}
+
+### Update Template Name
+PATCH {{baseUrl}}/template/patch-templateName
+Content-Type: application/json
+
+{
+    "templateName": "NewTemplateName2",
+    "newTemplateName": "NewTemplateName3"
 }

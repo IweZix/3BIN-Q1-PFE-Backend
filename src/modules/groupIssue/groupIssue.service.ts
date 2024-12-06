@@ -22,4 +22,15 @@ export class GroupIssueService {
     public async getGroupIssueByName(groupIssueName: string): Promise<GroupIssue> {
         return await this.GroupIssueModel.findOne({ groupIssueName }).exec();
     }
+    public async deleteGroupIssueByName(groupIssueName: string): Promise<void> {
+        await this.GroupIssueModel.deleteOne({ groupIssueName }).exec();
+    }
+
+    public async updateGroupIssueName(groupIssueName: string, newGroupIssueName: string): Promise<GroupIssue> {
+        return this.GroupIssueModel.findOneAndUpdate(
+            { groupIssueName },
+            { groupIssueName: newGroupIssueName },
+            { new: true }, // Return the updated document
+        ).exec();
+    }
 }

@@ -22,4 +22,15 @@ export class IssueService {
     public async getIssueByName(issueName: string): Promise<Issue> {
         return await this.IssueModel.findOne({ issueName }).exec();
     }
+    public async deleteIssueByName(issueName: string): Promise<void> {
+        await this.IssueModel.deleteOne({ issueName }).exec();
+    }
+
+    public async updateIssueName(issueName: string, newIssueName: string): Promise<Issue> {
+        return this.IssueModel.findOneAndUpdate(
+            { issueName },
+            { issueName: newIssueName },
+            { new: true }, // Return the updated document
+        ).exec();
+    }
 }

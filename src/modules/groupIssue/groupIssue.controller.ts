@@ -1,4 +1,4 @@
-import { Controller, Get, Post, HttpCode, Body, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, HttpCode, Body, ConflictException, Delete, Patch, NotFoundException} from '@nestjs/common';
 import { GroupIssueService } from './groupIssue.service';
 import { GroupIssue } from '../../schemas/groupIssue.schema';
 import { ValidationPipe } from '@nestjs/common';
@@ -29,5 +29,34 @@ export class GroupIssueController {
             throw new ConflictException('GroupIssue already exists');
         }
         return this.groupIssueService.createGroupIssue(GroupIssueDTO);
+    }
+
+    @Delete('delete-groupIssue')
+    @HttpCode(204)
+    async deleteGroupIssue(@Body(new ValidationPipe()) IssueDto: { groupIssueName: string }): Promise<void> {
+        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(IssueDto.groupIssueName);
+        if (!existingIssue) {
+            throw new NotFoundException('issue not found');
+        }
+        await this.groupIssueService.deleteGroupIssueByName(IssueDto.groupIssueName);
+    }
+
+    @Patch('patch-groupIssueName')
+    @HttpCode(200)
+    async updateGroupIssueName(
+        @Body('groupIssueName') groupIssueName: string,
+        @Body(new ValidationPipe()) updateDto: { newGroupIssueName: string },
+    ): Promise<GroupIssue> {
+        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
+        if (!existingIssue) {
+            throw new NotFoundException('groupIssue not found');
+        }
+
+        const duplicateIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(updateDto.newGroupIssueName);
+        if (duplicateIssue) {
+            throw new ConflictException('A groupIssue with the new name already exists');
+        }
+
+        return this.groupIssueService.updateGroupIssueName(groupIssueName, updateDto.newGroupIssueName);
     }
 }

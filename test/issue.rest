@@ -9,5 +9,22 @@ POST {{baseUrl}}/issue/create-issue
 Content-Type: application/json
 
 {
-    "issueName": "New issue Name"
+    "issueName": "NewIssueName"
+}
+
+### Delete issue by Name
+DELETE {{baseUrl}}/issue/delete-issue
+Content-Type: application/json
+
+{
+    "issueName": "NewIssueName"
+}
+
+### Update issue Name
+PATCH {{baseUrl}}/issue/patch-issueName
+Content-Type: application/json
+
+{
+    "issueName": "New issue Name",
+    "newIssueName": "New Issue Name"
 }
