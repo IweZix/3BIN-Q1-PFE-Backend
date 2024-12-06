@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Update issue Name
-PATCH {{baseUrl}}/issue/Patch-issueName
+PATCH {{baseUrl}}/issue/patch-issueName
 Content-Type: application/json
 
 {

@@ -11,3 +11,21 @@ Content-Type: application/json
 {
     "groupIssueName": "New groupIssue Name"
 }
+
+### Delete issue by Name
+DELETE {{baseUrl}}/groupIssue/delete-groupIssue
+Content-Type: application/json
+
+{
+    "groupIssueName": "New groupIssue Name"
+}
+
+### Update issue Name
+PATCH {{baseUrl}}/groupIssue/patch-groupIssueName
+Content-Type: application/json
+
+{
+    "groupIssueName": "New groupIssue Name",
+    "newGroupIssueName": "New GroupIssue Name"
+}
+
