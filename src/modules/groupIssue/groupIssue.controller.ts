@@ -19,8 +19,12 @@ export class GroupIssueController {
 
     @Post('create-groupIssue')
     @HttpCode(201)
-    async createOneGroupIssue(@Body(new ValidationPipe()) GroupIssueDTO: { groupIssueName: string }): Promise<GroupIssue> {
-        const existingGroupIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(GroupIssueDTO.groupIssueName);
+    async createOneGroupIssue(
+        @Body(new ValidationPipe()) GroupIssueDTO: { groupIssueName: string },
+    ): Promise<GroupIssue> {
+        const existingGroupIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(
+            GroupIssueDTO.groupIssueName,
+        );
         if (existingGroupIssue) {
             throw new ConflictException('GroupIssue already exists');
         }

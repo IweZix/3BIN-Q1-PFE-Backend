@@ -8,11 +8,13 @@ import { IssueModule } from './modules/issue/issue.module';
 import { GroupIssueModule } from './modules/groupIssue/groupIssue.module';
 import { ScoringModule } from "./modules/scoring/scoring.module";
 
+
 /**
  * The AppModule is the root module of the application.
  */
 @Module({
     imports: [DatabaseModule, AuthModule, AuthCompanyModule, QuestionModule, TemplateModule, IssueModule, GroupIssueModule,ScoringModule],
+
     controllers: [],
     providers: [],
 })
