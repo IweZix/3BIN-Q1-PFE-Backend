@@ -1,4 +1,16 @@
-import { Controller, Get, Post, HttpCode, Body, ConflictException, Delete, Param, NotFoundException, Patch } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    HttpCode,
+    Body,
+    ConflictException,
+    Delete,
+    Param,
+    NotFoundException,
+    Patch,
+    Put
+} from "@nestjs/common";
 import { TemplateService } from './template.service';
 import { Template } from '../../schemas/template.schema';
 import { ValidationPipe } from '@nestjs/common';
@@ -37,13 +49,13 @@ export class TemplateController {
         await this.templateService.deleteTemplateByName(TemplateDto.templateName);
     }
 
-    @Patch('patch-templateName')
+    @Put('patch-templateName/:id')
     @HttpCode(200)
     async updateTemplateName(
-        @Body('templateName') templateName: string,
+        @Param('id') templateId: string,
         @Body(new ValidationPipe()) updateDto: { newTemplateName: string },
-    ): Promise<Template> {
-        const existingTemplate: Template = await this.templateService.getTemplateByName(templateName);
+    ): Promise<void> {
+        const existingTemplate: Template = await this.templateService.getTemplateById(templateId);
         if (!existingTemplate) {
             throw new NotFoundException('Template not found');
         }
@@ -53,6 +65,6 @@ export class TemplateController {
             throw new ConflictException('A template with the new name already exists');
         }
 
-        return this.templateService.updateTemplateName(templateName, updateDto.newTemplateName);
+        await this.templateService.updateTemplateName(templateId, updateDto.newTemplateName);
     }
 }
