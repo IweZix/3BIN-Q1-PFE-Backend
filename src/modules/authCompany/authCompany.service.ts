@@ -100,6 +100,32 @@ export class AuthCompanyService {
     }
 
     /**
+     * Update the password of a company
+     * @param {string} email The email of the company
+     * @param {string} password The new password
+     * @return {Promise<boolean>} True if the password is updated, false otherwise
+     */
+    public async updatePassword(email: string, password: string): Promise<boolean> {
+        const hashedPassword = await bcrypt.hash(password, this.SALT_ROUNDS);
+        const company = await this.companyModel.findOne({ email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.password = hashedPassword;
+        company.isPasswordUpdated = true;
+        await company.save();
+        return true;
+    }
+
+    /**
+     * Get all companies
+     * @return {Promise<Company[]>} All companies
+     */
+    public async getAllCompanies(): Promise<Company[]> {
+        return await this.companyModel.find().exec();
+    }
+
+    /**
      * Get all questions that the company has
      * @param {RegisterCompanyDTO} company The company
      * @return {Promise<QuestionAnswer[]>} The questions that the company has
@@ -163,23 +189,5 @@ export class AuthCompanyService {
         allNAQuestions = allNAQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
 
         return allNAQuestions;
-    }
-
-    /**
-     * Update the password of a company
-     * @param {string} email The email of the company
-     * @param {string} password The new password
-     * @return {Promise<boolean>} True if the password is updated, false otherwise
-     */
-    public async updatePassword(email: string, password: string): Promise<boolean> {
-        const hashedPassword = await bcrypt.hash(password, this.SALT_ROUNDS);
-        const company = await this.companyModel.findOne({ email }).exec();
-        if (!company) {
-            throw new Error('Company not found');
-        }
-        company.password = hashedPassword;
-        company.isPasswordUpdated = true;
-        await company.save();
-        return true;
     }
 }

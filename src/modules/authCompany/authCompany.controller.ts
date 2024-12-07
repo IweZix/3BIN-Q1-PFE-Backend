@@ -6,6 +6,7 @@ import {
     NotFoundException,
     Patch,
     Post,
+    Get,
     ValidationPipe,
     UnauthorizedException,
     Headers,
@@ -15,13 +16,16 @@ import { RegisterCompanyDTO } from '../../dto/RegisterCompanyDTO';
 import { Company } from '../../schemas/company.schema';
 import { QuestionAnswer } from '../../schemas/questionAnswer.schema';
 import { LoginDTO } from '../../dto/LoginDTO';
+import { AuthService } from "../auth/auth.service";
 
 @Controller('authCompany')
 export class AuthCompanyController {
     private readonly authCompanyService: AuthCompanyService;
+    private readonly authservice: AuthService;
 
-    public constructor(authCompanyService: AuthCompanyService) {
+    public constructor(authCompanyService: AuthCompanyService, authservice: AuthService) {
         this.authCompanyService = authCompanyService;
+        this.authservice = authservice;
     }
 
     @Post('register-company')
@@ -99,5 +103,22 @@ export class AuthCompanyController {
             success: true,
             message: 'Password updated successfully',
         };
+    }
+
+    /**
+     * Get all companies
+     * @param {string} token The token of the company
+     * @return {Promise<Company[]>} All companies
+     */
+    @Get('all')
+    @HttpCode(200)
+    async getAllCompanies(
+        @Headers('Authorization') token: string,
+    ): Promise<Company[]> {
+        const decoded = await this.authservice.verify(token);
+        if (!decoded) {
+            throw new UnauthorizedException('Unauthorized');
+        }
+        return this.authCompanyService.getAllCompanies();
     }
 }
