@@ -23,15 +23,15 @@ export class TemplateService {
         return await this.TemplateModel.findOne({ templateName }).exec();
     }
 
-    public async deleteTemplateByName(templateName: string): Promise<void> {
-        await this.TemplateModel.deleteOne({ templateName }).exec();
+    public async getTemplateById(templateId: string): Promise<Template> {
+        return await this.TemplateModel.findById(templateId).exec();
     }
 
-    public async updateTemplateName(templateName: string, newTemplateName: string): Promise<Template> {
-        return this.TemplateModel.findOneAndUpdate(
-            { templateName },
-            { templateName: newTemplateName },
-            { new: true }, // Return the updated document
-        ).exec();
+    public async deleteTemplateById(templateId: string): Promise<void> {
+        await this.TemplateModel.deleteOne({ _id: templateId }).exec();
+    }
+
+    public async updateTemplateName(templateId: string, newTemplateName: string): Promise<void> {
+        await this.TemplateModel.updateOne({ _id: templateId }, { templateName: newTemplateName }).exec();
     }
 }
