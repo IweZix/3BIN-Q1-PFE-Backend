@@ -39,14 +39,16 @@ export class TemplateController {
         return this.templateService.createTemplate(TemplateDto);
     }
 
-    @Delete('delete-template')
+    @Delete('delete-template/:id')
     @HttpCode(204)
-    async deleteTemplate(@Body(new ValidationPipe()) TemplateDto: { templateName: string }): Promise<void> {
-        const existingTemplate: Template = await this.templateService.getTemplateByName(TemplateDto.templateName);
+    async deleteTemplate(
+        @Param('id') templateId: string,
+    ): Promise<void> {
+        const existingTemplate: Template = await this.templateService.getTemplateById(templateId);
         if (!existingTemplate) {
             throw new NotFoundException('Template not found');
         }
-        await this.templateService.deleteTemplateByName(TemplateDto.templateName);
+        await this.templateService.deleteTemplateById(templateId);
     }
 
     @Put('patch-templateName/:id')

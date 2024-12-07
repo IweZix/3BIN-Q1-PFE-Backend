@@ -27,8 +27,8 @@ export class TemplateService {
         return await this.TemplateModel.findById(templateId).exec();
     }
 
-    public async deleteTemplateByName(templateName: string): Promise<void> {
-        await this.TemplateModel.deleteOne({ templateName }).exec();
+    public async deleteTemplateById(templateId: string): Promise<void> {
+        await this.TemplateModel.deleteOne({ _id: templateId }).exec();
     }
 
     public async updateTemplateName(templateId: string, newTemplateName: string): Promise<void> {
