@@ -19,6 +19,12 @@ Content-Type: application/json
   "password": "password"
 }
 
+
+###gzet a list of all users
+GET {{baseUrl}}/authAdmin/allcompanies
+Authorization:   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQzMjgwOCwiZXhwIjoxODE5ODMyODA4fQ.4AjNHeu9VhNPoHzJXU4UJ49z2DxnRZhTPlkeQvcHQVc
+
+
 ### Verify
 POST {{baseUrl}}/authAdmin/verify-admin
 Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQzMjgwOCwiZXhwIjoxODE5ODMyODA4fQ.4AjNHeu9VhNPoHzJXU4UJ49z2DxnRZhTPlkeQvcHQVc

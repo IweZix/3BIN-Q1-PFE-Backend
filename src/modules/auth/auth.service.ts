@@ -9,6 +9,7 @@ import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
 import { QuestionAnswer } from 'src/schemas/questionAnswer.schema';
 import { Company } from 'src/schemas/company.schema';
+import { CompanyDTO } from 'src/dto/CompanyDTO';
 
 /**
  * The auth service.
@@ -144,5 +145,16 @@ export class AuthService {
             }
         }
         return true;
+    }
+
+    public async getAllCompanies(): Promise<CompanyDTO[]> {
+        const companies: Company[] = await this.companyModel.find().exec();
+        const c :CompanyDTO[]= companies.map(company => ({
+            name: company.name,
+            email: company.email,
+            formIsComplete: company.formIsComplete,
+            isValidated: company.isValidated,
+        }));
+        return c;
     }
 }
