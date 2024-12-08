@@ -35,6 +35,7 @@ export class AuthCompanyService {
             questions: await this.arrangeTemplate(company),
             naQuestions: await this.inverseArrangeTemplate(company),
             isPasswordUpdated: false,
+            formIsComplete: false,
         });
         const companySaved: Company = await newCompany.save();
         const token = jwt.sign({ email: companySaved.email }, this.JWT_SECRET, {
@@ -189,5 +190,25 @@ export class AuthCompanyService {
         allNAQuestions = allNAQuestions.filter(questionAnswer => questionAnswer.questionsList.length > 0);
 
         return allNAQuestions;
+    }
+
+    public async getAnswerForm(email: string): Promise<QuestionAnswer[]> {
+        let company: Company = await this.companyModel.findOne({ email }).exec();
+        return company.questions;
+    }
+
+    public async answerFormCompleted(answerForm: QuestionAnswer[], email: string): Promise<void> {
+        let company: Company = await this.companyModel.findOne({ email: email }).exec();
+        if (!company) {
+            throw new Error('Company not found');
+        }
+        company.questions = answerForm;
+        company.formIsComplete = true;
+        await this.companyModel.replaceOne({ email: email }, company).exec();
+    }
+
+    public async getNAForm(email: string): Promise<QuestionAnswer[]> {
+        let company: Company = await this.companyModel.findOne({ email }).exec();
+        return company.naQuestions;
     }
 }

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, HttpCode, Body, ConflictException, Delete, Patch, NotFoundException} from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    HttpCode,
+    Body,
+    ConflictException,
+    Delete,
+    Patch,
+    NotFoundException,
+} from '@nestjs/common';
 import { GroupIssueService } from './groupIssue.service';
 import { GroupIssue } from '../../schemas/groupIssue.schema';
 import { ValidationPipe } from '@nestjs/common';
@@ -52,7 +62,9 @@ export class GroupIssueController {
             throw new NotFoundException('groupIssue not found');
         }
 
-        const duplicateIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(updateDto.newGroupIssueName);
+        const duplicateIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(
+            updateDto.newGroupIssueName,
+        );
         if (duplicateIssue) {
             throw new ConflictException('A groupIssue with the new name already exists');
         }

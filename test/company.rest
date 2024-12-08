@@ -36,6 +36,10 @@ Content-Type: application/json
   "email": "contact@steam.com"
 }
 
+### Test récupération de response aka formulaire compléter
+GET  {{baseUrl}}/authCompany/answerForm
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNjY0MDE5LCJleHAiOjE4MjAwNjQwMTl9.5r0ZV1fsqRxwcd3Oh8KQQ6emTRjK0Gq4H9Nfwpm1QOo
+
 ### Test envoie de response aka formulaire compléter
 POST  {{baseUrl}}/authCompany/answerForm
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho

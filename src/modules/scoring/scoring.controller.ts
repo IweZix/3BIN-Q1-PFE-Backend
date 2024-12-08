@@ -9,7 +9,7 @@ import {
     Post,
     UnauthorizedException,
     ValidationPipe,
-    Param
+    Param,
 } from '@nestjs/common';
 import { ScoringService } from './scoring.service';
 import { AuthService } from '../auth/auth.service';
@@ -39,11 +39,8 @@ export class ScoringController {
 
     @Get(':email') // Capture dynamique de l'email dans l'URL
     @HttpCode(200)
-    async getScoresTotal(
-        @Param('email') email: string,
-        @Headers('Authorization') token: string,
-    ): Promise<any> {
-        this.authservice.verify(token); 
+    async getScoresTotal(@Param('email') email: string, @Headers('Authorization') token: string): Promise<any> {
+        this.authservice.verify(token);
 
         if (!email) {
             throw new NotFoundException('Email is required');
