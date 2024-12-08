@@ -15,6 +15,7 @@ import { Company } from 'src/schemas/company.schema';
  */
 @Injectable()
 export class AuthService {
+    
     private readonly SALT_ROUNDS: number = config.BCRYPT_SALT_ROUNDS;
     private readonly JWT_SECRET: string = config.JWT_SECRET;
     private readonly JWT_LIFETIME: number = config.JWT_LIFETIME;
@@ -132,6 +133,16 @@ export class AuthService {
         admin.password = hashedPassword;
         admin.isPasswordUpdated = true;
         await admin.save();
+        return true;
+    }
+
+    public async validatedFormUser(email: string) : Promise<boolean> {
+        const company: Company = await this.companyModel.findOne({ email: email }).exec();
+        for(const question of company.questions ){
+            if(!question.validatedQuestion){
+                return false;
+            }
+        }
         return true;
     }
 }

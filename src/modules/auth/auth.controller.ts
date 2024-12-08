@@ -9,6 +9,7 @@ import {
     Get,
     Headers,
     Patch,
+    Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
@@ -92,10 +93,10 @@ export class AuthController {
         return await this.userService.verifyPasswordUpdated(user);
     }
 
-    @Get('answerFormUser')
+    @Get('answerFormUser/:email')
     @HttpCode(200)
     async getAnswerFormUser(
-        @Body('email') email: string,
+        @Param('email') email: string,
         @Headers('Authorization') token: string,
     ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
@@ -142,5 +143,19 @@ export class AuthController {
             success: true,
             message: 'Password updated successfully',
         };
+    }
+
+    @Get('validatedFormUser/:email')
+    @HttpCode(201)
+    async validatedFormUser(
+        @Param('email', new ValidationPipe()) email: string,
+        @Headers('Authorization') token: string,
+    ): Promise<boolean> {
+        this.userService.verify(token);
+        try {
+            return this.userService.validatedFormUser(email);
+        } catch (error) {
+            throw new NotFoundException('User not found');
+        }
     }
 }
