@@ -24,6 +24,9 @@ export class Company extends Document {
 
     @Prop({ required: true })
     isPasswordUpdated: boolean;
+
+    @Prop({ required: false })
+    formIsComplete: boolean;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

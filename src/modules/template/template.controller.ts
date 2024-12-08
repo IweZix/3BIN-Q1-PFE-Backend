@@ -9,8 +9,8 @@ import {
     Param,
     NotFoundException,
     Patch,
-    Put
-} from "@nestjs/common";
+    Put,
+} from '@nestjs/common';
 import { TemplateService } from './template.service';
 import { Template } from '../../schemas/template.schema';
 import { ValidationPipe } from '@nestjs/common';
@@ -41,9 +41,7 @@ export class TemplateController {
 
     @Delete('delete-template/:id')
     @HttpCode(204)
-    async deleteTemplate(
-        @Param('id') templateId: string,
-    ): Promise<void> {
+    async deleteTemplate(@Param('id') templateId: string): Promise<void> {
         const existingTemplate: Template = await this.templateService.getTemplateById(templateId);
         if (!existingTemplate) {
             throw new NotFoundException('Template not found');
