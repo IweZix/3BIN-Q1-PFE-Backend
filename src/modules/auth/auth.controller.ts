@@ -10,6 +10,7 @@ import {
     Headers,
     Patch,
     Param,
+    Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
@@ -94,10 +95,10 @@ export class AuthController {
         return await this.userService.verifyPasswordUpdated(user);
     }
 
-    @Get('answerFormUser/:email')
+    @Get('answerFormUser')
     @HttpCode(200)
     async getAnswerFormUser(
-        @Param('email') email: string,
+        @Query('email') email: string,
         @Headers('Authorization') token: string,
     ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
@@ -120,6 +121,8 @@ export class AuthController {
     ): Promise<void> {
         this.userService.verify(token);
         try {
+            console.log(email);
+            
             this.userService.postAnswerFormUser(email, answers);
         } catch (error) {
             throw new NotFoundException('User not found');
