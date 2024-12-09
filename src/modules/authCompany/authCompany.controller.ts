@@ -94,16 +94,18 @@ export class AuthCompanyController {
     async updatePasswordCompany(
         @Body('password', new ValidationPipe()) password: string,
         @Headers('Authorization') token: string,
-    ): Promise<{ success: boolean; message: string }> {
+    ): Promise<boolean> {
+        try{
         const decoded = await this.authCompanyService.verify(token);
         const email = decoded.email;
+       
+        
 
         await this.authCompanyService.updatePassword(email, password);
-
-        return {
-            success: true,
-            message: 'Password updated successfully',
-        };
+    }catch(e){
+        return false;
+    }
+        return true;
     }
 
     /**
