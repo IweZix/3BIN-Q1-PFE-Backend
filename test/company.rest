@@ -668,20 +668,19 @@ Content-Type: application/json
   ]}
 ###update password authCompany 
 PATCH {{baseUrl}}/authCompany/updatePassword
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNDMyODgzLCJleHAiOjE4MTk4MzI4ODN9.RKQIOrJoOEeFQgHx3YXvqIco4_XEyvth_fsOmFSWSho
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvbnRhY3RAc3RlYW0uY29tIiwiaWF0IjoxNzMzNzM5ODE1LCJleHAiOjE4MjAxMzk4MTV9.uaUkqsQNZai2lsq2LoCHPGzQsjZcgrk_H9o64mKdy14
 Content-Type: application/json
 
 {
-  "password": "passwordChanged"
-}
-
+  "password": "password"
+} 
 ### Login
 POST {{baseUrl}}/authCompany/login-company
 Content-Type: application/json
 
 {
-  "email": "contact@steam.com",
-  "password": "passwordChanged"
+  "email": "contact2@steam.com",
+  "password": "password"
 }
 
 ### Get all company
