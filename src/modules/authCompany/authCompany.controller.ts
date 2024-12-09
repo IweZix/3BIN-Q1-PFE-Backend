@@ -145,11 +145,11 @@ export class AuthCompanyController {
     async getFormCompleted(@Headers('Authorization') token: string): Promise<boolean> {
         try{
             const company = await this.authCompanyService.verify(token);
+            return company.formIsComplete;
         }catch(e){
             return false;
         }
         
-        return true;
     }
 
     @Get('answerForm')
