@@ -77,6 +77,22 @@ export class AuthController {
         return this.userService.verify(token);
     }
 
+       /**
+     * Verify a user.
+     * @param token The token to verify.
+     * @returns {Promise<Boolean>} The verified user.
+     */
+    @Post('verify-admin-bool')
+    @HttpCode(200)
+    async verifyBool(@Headers('Authorization') token: string): Promise<Boolean> {
+        try {
+            this.userService.verify(token);
+        } catch (error) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Verify password updated.
      * @param email The email of the user.
