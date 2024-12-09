@@ -21,11 +21,10 @@ Content-Type: application/json
 }
 
 ### Update issue Name
-PATCH {{baseUrl}}/groupIssue/patch-groupIssueName
+PATCH {{baseUrl}}/groupIssue/patch-groupIssueName/Environnement
 Content-Type: application/json
 
 {
-    "groupIssueName": "New groupIssue Name",
     "newGroupIssueName": "New GroupIssue Name"
 }
 

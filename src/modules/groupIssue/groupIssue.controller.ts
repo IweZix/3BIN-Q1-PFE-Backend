@@ -4,6 +4,7 @@ import {
     Post,
     HttpCode,
     Body,
+    Param,
     ConflictException,
     Delete,
     Patch,
@@ -41,22 +42,23 @@ export class GroupIssueController {
         return this.groupIssueService.createGroupIssue(GroupIssueDTO);
     }
 
-    @Delete('delete-groupIssue')
+    @Delete('delete-groupIssue/:groupIssueName')
     @HttpCode(204)
-    async deleteGroupIssue(@Body(new ValidationPipe()) IssueDto: { groupIssueName: string }): Promise<void> {
-        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(IssueDto.groupIssueName);
+    async deleteGroupIssue(
+        @Param('groupIssueName') groupIssueName: string) {
+        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
         if (!existingIssue) {
             throw new NotFoundException('issue not found');
         }
-        await this.groupIssueService.deleteGroupIssueByName(IssueDto.groupIssueName);
+        await this.groupIssueService.deleteGroupIssueByName(groupIssueName);
     }
 
-    @Patch('patch-groupIssueName')
+    @Patch('patch-groupIssueName/:groupIssueName')
     @HttpCode(200)
     async updateGroupIssueName(
-        @Body('groupIssueName') groupIssueName: string,
+        @Param('groupIssueName') groupIssueName: string,
         @Body(new ValidationPipe()) updateDto: { newGroupIssueName: string },
-    ): Promise<GroupIssue> {
+    ): Promise<void> {
         const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
         if (!existingIssue) {
             throw new NotFoundException('groupIssue not found');
@@ -69,6 +71,6 @@ export class GroupIssueController {
             throw new ConflictException('A groupIssue with the new name already exists');
         }
 
-        return this.groupIssueService.updateGroupIssueName(groupIssueName, updateDto.newGroupIssueName);
+        await this.groupIssueService.updateGroupIssueName(groupIssueName, updateDto.newGroupIssueName);
     }
 }
