@@ -31,7 +31,7 @@ export class TemplateService {
         await this.TemplateModel.deleteOne({ templateName: templateName }).exec();
     }
 
-    public async updateTemplateName(templateId: string, newTemplateName: string): Promise<void> {
-        await this.TemplateModel.updateOne({ _id: templateId }, { templateName: newTemplateName }).exec();
+    public async updateTemplateName(templateName: string, newTemplateName: string): Promise<void> {
+        await this.TemplateModel.updateOne({ templateName: templateName }, { templateName: newTemplateName }).exec();
     }
 }
