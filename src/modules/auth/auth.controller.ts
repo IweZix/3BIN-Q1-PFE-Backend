@@ -9,12 +9,15 @@ import {
     Get,
     Headers,
     Patch,
+    Param,
+    Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Admin } from 'src/schemas/admin.schema';
 import { RegisteAdminDTO } from 'src/dto/RegisteAdminDTO';
 import { LoginDTO } from 'src/dto/LoginDTO';
 import { QuestionAnswer } from 'src/schemas/questionAnswer.schema';
+import { CompanyDTO } from 'src/dto/CompanyDTO';
 
 /**
  * The controller for the auth module.
@@ -111,11 +114,14 @@ export class AuthController {
     @Get('answerFormUser')
     @HttpCode(200)
     async getAnswerFormUser(
-        @Body('email') email: string,
+        @Query('email') email: string,
         @Headers('Authorization') token: string,
     ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
         try {
+            console.log(email);
+            
+            
             return this.userService.getAnswerFormUser(email);
         } catch (error) {
             throw new NotFoundException('User not found');
@@ -131,7 +137,9 @@ export class AuthController {
     ): Promise<void> {
         this.userService.verify(token);
         try {
-            this.userService.postAnswerFormUser(email, answers);
+            console.log(email);
+            
+            await this.userService.postAnswerFormUser(email, answers);
         } catch (error) {
             throw new NotFoundException('User not found');
         }
@@ -158,5 +166,26 @@ export class AuthController {
             success: true,
             message: 'Password updated successfully',
         };
+    }
+
+    @Get('validatedFormUser')
+    @HttpCode(201)
+    async validatedFormUser(
+        @Query('email', new ValidationPipe()) email: string,
+        @Headers('Authorization') token: string,
+    ): Promise<boolean> {
+        this.userService.verify(token);
+        try {
+            return this.userService.validatedFormUser(email);
+        } catch (error) {
+            throw new NotFoundException('User not found');
+        }
+    }
+
+    @Get('allcompanies')
+    @HttpCode(200)
+    async getAllCompanies(@Headers('Authorization') token: string): Promise<CompanyDTO[]> {
+        this.userService.verify(token);
+        return this.userService.getAllCompanies();
     }
 }
