@@ -74,7 +74,7 @@ export class AuthController {
      * @param token The token to verify.
      * @returns {Promise<Admin>} The verified user.
      */
-    @Post('verify-admin')
+    @Get('verify-admin')
     @HttpCode(200)
     async verify(@Headers('Authorization') token: string): Promise<Admin> {
         return this.userService.verify(token);
@@ -85,11 +85,13 @@ export class AuthController {
      * @param token The token to verify.
      * @returns {Promise<Boolean>} The verified user.
      */
-    @Post('verify-admin-bool')
+    @Get('verify-admin-bool')
     @HttpCode(200)
-    async verifyBool(@Headers('Authorization') token: string): Promise<Boolean> {
+    async verifyBool(@Headers('Authorization') token: string): Promise<boolean> {
         try {
-            this.userService.verify(token);
+            
+        if(!await this.userService.verify(token)){
+            return false;}
         } catch (error) {
             return false;
         }
