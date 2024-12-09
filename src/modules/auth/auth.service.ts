@@ -111,8 +111,9 @@ export class AuthService {
     }
 
     public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {
+        console.log("emailllll" + email);
+        
         const company: Company = await this.companyModel.findOne({ email: email }).exec();
-        console.log(company);
         
         if (!company) {
             throw new Error('Company not found');

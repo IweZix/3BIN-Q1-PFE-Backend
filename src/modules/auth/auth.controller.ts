@@ -123,7 +123,7 @@ export class AuthController {
         try {
             console.log(email);
             
-            this.userService.postAnswerFormUser(email, answers);
+            await this.userService.postAnswerFormUser(email, answers);
         } catch (error) {
             throw new NotFoundException('User not found');
         }
@@ -152,10 +152,10 @@ export class AuthController {
         };
     }
 
-    @Get('validatedFormUser/:email')
+    @Get('validatedFormUser')
     @HttpCode(201)
     async validatedFormUser(
-        @Param('email', new ValidationPipe()) email: string,
+        @Query('email', new ValidationPipe()) email: string,
         @Headers('Authorization') token: string,
     ): Promise<boolean> {
         this.userService.verify(token);
