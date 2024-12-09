@@ -7,6 +7,7 @@ import { TemplateModule } from './modules/template/template.module';
 import { IssueModule } from './modules/issue/issue.module';
 import { GroupIssueModule } from './modules/groupIssue/groupIssue.module';
 import { ScoringModule } from './modules/scoring/scoring.module';
+import { GlossaireModule } from './modules/glossaire/glossaire.module';
 
 /**
  * The AppModule is the root module of the application.
@@ -21,6 +22,7 @@ import { ScoringModule } from './modules/scoring/scoring.module';
         IssueModule,
         GroupIssueModule,
         ScoringModule,
+        GlossaireModule,
     ],
 
     controllers: [],
