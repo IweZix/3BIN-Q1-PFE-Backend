@@ -42,14 +42,15 @@ export class GroupIssueController {
         return this.groupIssueService.createGroupIssue(GroupIssueDTO);
     }
 
-    @Delete('delete-groupIssue')
+    @Delete('delete-groupIssue/:groupIssueName')
     @HttpCode(204)
-    async deleteGroupIssue(@Body(new ValidationPipe()) IssueDto: { groupIssueName: string }): Promise<void> {
-        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(IssueDto.groupIssueName);
+    async deleteGroupIssue(
+        @Param('groupIssueName') groupIssueName: string) {
+        const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
         if (!existingIssue) {
             throw new NotFoundException('issue not found');
         }
-        await this.groupIssueService.deleteGroupIssueByName(IssueDto.groupIssueName);
+        await this.groupIssueService.deleteGroupIssueByName(groupIssueName);
     }
 
     @Patch('patch-groupIssueName/:groupIssueName')
