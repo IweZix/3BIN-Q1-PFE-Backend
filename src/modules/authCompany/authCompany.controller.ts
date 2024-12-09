@@ -143,11 +143,13 @@ export class AuthCompanyController {
     @Get('formCompleted')
     @HttpCode(200)
     async getFormCompleted(@Headers('Authorization') token: string): Promise<boolean> {
-        const company = await this.authCompanyService.verify(token);
-        if (!company) {
-            throw new UnauthorizedException('Unauthorized');
+        try{
+            const company = await this.authCompanyService.verify(token);
+        }catch(e){
+            return false;
         }
-        return company.formIsComplete;
+        
+        return true;
     }
 
     @Get('answerForm')
