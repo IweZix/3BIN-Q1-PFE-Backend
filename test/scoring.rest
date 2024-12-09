@@ -3,7 +3,7 @@
 ### Create a new scoring
 POST {{baseUrl}}/scoring
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQ5MTMxNSwiZXhwIjoxODE5ODkxMzE1fQ.90fZbYy-iu1bzJKUtpzTNdKWFfqLPljWfa2ZtdjDfSA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzc3MDIyOSwiZXhwIjoxODIwMTcwMjI5fQ.xcY7lLC9S5syDzHscUVbWQmVO7M7Xx5_Dj9Dxh5GmPU
 
 {
   "email": "contact@steam.com"

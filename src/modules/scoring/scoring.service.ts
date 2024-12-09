@@ -26,6 +26,7 @@ export class ScoringService {
     public async calculateScore(email: string): Promise<Scoring> {
         const company: Company = await this.authCompanyService.getCompanyByEmail(email);
         const QuestionAnswer: QuestionAnswer[] = company.questions;
+        const naQuestions: QuestionAnswer[] = company.naQuestions;
 
         let scoring = new this.ScoringModel();
         scoring.companyEmail = company.email;
@@ -35,14 +36,16 @@ export class ScoringService {
         let totalScoreNow = 0;
         let totalScore2Years = 0;
         let totalTotal = 0;
+        let scoreTotalNA = 0;
         for (const questionAnswer of QuestionAnswer) {
             let issueScoring = new this.IssueScoringModel();
             const [scoreNow, score2Years, scoreTotal] = this.calculateFromIssue(questionAnswer.questionsList);
+            let scoreTotalNA = this.calculateNAScoreFromIssue(naQuestions, questionAnswer.issueId);
 
             issueScoring.issue = questionAnswer.issueId;
-            issueScoring.scoreTotalNow = scoreNow;
-            issueScoring.scoreTotal2Years = score2Years;
-            issueScoring.scoreTotal = scoreTotal;
+            issueScoring.scoreTotalNow = parseFloat((scoreNow + scoreTotalNA).toFixed(2));
+            issueScoring.scoreTotal2Years = parseFloat((score2Years).toFixed(2));
+            issueScoring.scoreTotal = parseFloat((scoreTotal + scoreTotalNA).toFixed(2));
             scoring.issuesList.push(issueScoring);
 
             if (scoreTotal < scoreNow) {
@@ -91,5 +94,17 @@ export class ScoringService {
         }
         scoreTotalIssue = parseFloat(scoreTotalIssue.toFixed(2));
         return [scoreNowIssue, score2YearsIssue, scoreTotalIssue];
+    }
+
+    private calculateNAScoreFromIssue(questionAnswers: QuestionAnswer[], idIssue: number): number {
+        let scoreTotal = 0;
+        for (const questions of questionAnswers) {
+            if (questions.issueId === idIssue) {
+                for (const question of questions.questionsList) {
+                    scoreTotal += question.scoreTotal;
+                }
+            }
+        }
+        return scoreTotal;
     }
 }
