@@ -4,6 +4,7 @@ import {
     Post,
     HttpCode,
     Body,
+    Param,
     ConflictException,
     Delete,
     Patch,
@@ -51,12 +52,12 @@ export class GroupIssueController {
         await this.groupIssueService.deleteGroupIssueByName(IssueDto.groupIssueName);
     }
 
-    @Patch('patch-groupIssueName')
+    @Patch('patch-groupIssueName/:groupIssueName')
     @HttpCode(200)
     async updateGroupIssueName(
-        @Body('groupIssueName') groupIssueName: string,
+        @Param('groupIssueName') groupIssueName: string,
         @Body(new ValidationPipe()) updateDto: { newGroupIssueName: string },
-    ): Promise<GroupIssue> {
+    ): Promise<void> {
         const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
         if (!existingIssue) {
             throw new NotFoundException('groupIssue not found');
@@ -69,6 +70,6 @@ export class GroupIssueController {
             throw new ConflictException('A groupIssue with the new name already exists');
         }
 
-        return this.groupIssueService.updateGroupIssueName(groupIssueName, updateDto.newGroupIssueName);
+        await this.groupIssueService.updateGroupIssueName(groupIssueName, updateDto.newGroupIssueName);
     }
 }
