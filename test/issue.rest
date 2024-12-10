@@ -9,7 +9,8 @@ POST {{baseUrl}}/issue/create-issue
 Content-Type: application/json
 
 {
-    "issueName": "NewIssueName"
+    "issueName": "Energie2",
+    "issueGroupName": "Environnement"
 }
 
 ### Delete issue by Name
@@ -17,7 +18,7 @@ DELETE {{baseUrl}}/issue/delete-issue
 Content-Type: application/json
 
 {
-    "issueName": "NewIssueName"
+    "issueName": "Energie2"
 }
 
 ### Update issue Name
