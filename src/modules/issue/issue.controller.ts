@@ -44,7 +44,6 @@ export class IssueController {
         if (!existingIssueGroupName) {
             throw new NotFoundException('Group issue not found');
         }
-        console.log(existingIssueGroupName);
         return this.issueService.createIssue(issueName, existingIssueGroupName._id);
     }
 

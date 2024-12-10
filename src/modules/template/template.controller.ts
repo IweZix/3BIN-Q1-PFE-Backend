@@ -39,23 +39,23 @@ export class TemplateController {
         return this.templateService.createTemplate(TemplateDto);
     }
 
-    @Delete('delete-template/:templateId')
+    @Delete('delete-template/:templateName')
     @HttpCode(204)
-    async deleteTemplate(@Param('templateId') templateId: string): Promise<void> {
-        const existingTemplate: Template = await this.templateService.getTemplateById(templateId);
+    async deleteTemplate(@Param('templateName') templateName: string): Promise<void> {
+        const existingTemplate: Template = await this.templateService.getTemplateByName(templateName);
         if (!existingTemplate) {
             throw new NotFoundException('Template not found');
         }
-        await this.templateService.deleteTemplateById(templateId);
+        await this.templateService.deleteTemplateByName(templateName);
     }
 
-    @Put('patch-templateName/:templateId')
-    @HttpCode(204)
+    @Patch('patch-templateName/:templateName')
+    @HttpCode(200)
     async updateTemplateName(
-        @Param('templateId') templateId: string,
+        @Param('templateName') templateName: string,
         @Body(new ValidationPipe()) updateDto: { newTemplateName: string },
     ): Promise<void> {
-        const existingTemplate: Template = await this.templateService.getTemplateById(templateId);
+        const existingTemplate: Template = await this.templateService.getTemplateByName(templateName);
         if (!existingTemplate) {
             throw new NotFoundException('Template not found');
         }
@@ -65,6 +65,6 @@ export class TemplateController {
             throw new ConflictException('A template with the new name already exists');
         }
 
-        await this.templateService.updateTemplateName(templateId, updateDto.newTemplateName);
+        await this.templateService.updateTemplateName(templateName, updateDto.newTemplateName);
     }
 }
