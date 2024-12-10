@@ -14,8 +14,8 @@ export class IssueService {
         return this.IssueModel.find().exec();
     }
 
-    public async createIssue(issueName: string, groupId: Types.ObjectId): Promise<Issue> {
-        const newIssue = new this.IssueModel({ issueName, group_id: groupId });
+    public async createIssue(issueName: string, groupIssueName: string): Promise<Issue> {
+        const newIssue = new this.IssueModel({ issueName, group_name: groupIssueName });
         return newIssue.save();
     }
 
