@@ -68,9 +68,7 @@ export class IssueController {
         if (!existingIssue) {
             throw new NotFoundException('issue not found');
         }
-        console.log(updateDto.newIssueName);
         const duplicateIssue: Issue = await this.issueService.getIssueByName(updateDto.newIssueName);
-        console.log(duplicateIssue);
         if (duplicateIssue) {
             throw new ConflictException('A issue with the new name already exists');
         }
