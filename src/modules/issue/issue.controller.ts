@@ -8,6 +8,7 @@ import {
     Delete,
     Patch,
     NotFoundException,
+    Param,
 } from '@nestjs/common';
 import { IssueService } from './issue.service';
 import { Issue } from '../../schemas/issue.schema';
@@ -47,28 +48,29 @@ export class IssueController {
         return this.issueService.createIssue(issueName, existingIssueGroupName.groupIssueName);
     }
 
-    @Delete('delete-issue')
+    @Delete('delete-issue/:issueName')
     @HttpCode(204)
-    async deleteIssue(@Body(new ValidationPipe()) IssueDto: { issueName: string }): Promise<void> {
-        const existingIssue: Issue = await this.issueService.getIssueByName(IssueDto.issueName);
+    async deleteIssue(@Param('issueName', new ValidationPipe()) issueName: string): Promise<void> {
+        const existingIssue: Issue = await this.issueService.getIssueByName(issueName);
         if (!existingIssue) {
             throw new NotFoundException('issue not found');
         }
-        await this.issueService.deleteIssueByName(IssueDto.issueName);
+        await this.issueService.deleteIssueByName(issueName);
     }
 
-    @Patch('patch-issueName')
+    @Patch('patch-issueName/:issueName')
     @HttpCode(200)
     async updateIssueName(
-        @Body('issueName') issueName: string,
+        @Param('issueName', new ValidationPipe()) issueName: string,
         @Body(new ValidationPipe()) updateDto: { newIssueName: string },
     ): Promise<Issue> {
         const existingIssue: Issue = await this.issueService.getIssueByName(issueName);
         if (!existingIssue) {
             throw new NotFoundException('issue not found');
         }
-
+        console.log(updateDto.newIssueName);
         const duplicateIssue: Issue = await this.issueService.getIssueByName(updateDto.newIssueName);
+        console.log(duplicateIssue);
         if (duplicateIssue) {
             throw new ConflictException('A issue with the new name already exists');
         }
