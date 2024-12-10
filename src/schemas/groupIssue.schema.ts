@@ -9,9 +9,6 @@ import { Document, ObjectId, Types } from "mongoose";
 export class GroupIssue extends Document {
     @Prop({ required: true })
     groupIssueName: string;
-
-    @Prop({ type: Types.ObjectId })
-    _id: Types.ObjectId;
 }
 
 export const GroupIssueSchema = SchemaFactory.createForClass(GroupIssue);

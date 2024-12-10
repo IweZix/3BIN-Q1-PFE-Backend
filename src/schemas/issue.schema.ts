@@ -11,7 +11,7 @@ export class Issue extends Document {
     issueName: string;
 
     @Prop({ required: true })
-    group_id: Types.ObjectId;
+    group_name: string;
 }
 
 export const IssueSchema = SchemaFactory.createForClass(Issue);

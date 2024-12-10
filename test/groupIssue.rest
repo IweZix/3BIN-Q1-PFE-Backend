@@ -9,7 +9,7 @@ POST {{baseUrl}}/groupIssue/create-groupIssue
 Content-Type: application/json
 
 {
-    "groupIssueName": "Environnement"
+    "groupIssueName": "test"
 }
 
 ### Delete issue by Name

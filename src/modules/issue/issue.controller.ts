@@ -44,7 +44,7 @@ export class IssueController {
         if (!existingIssueGroupName) {
             throw new NotFoundException('Group issue not found');
         }
-        return this.issueService.createIssue(issueName, existingIssueGroupName._id);
+        return this.issueService.createIssue(issueName, existingIssueGroupName.groupIssueName);
     }
 
     @Delete('delete-issue')

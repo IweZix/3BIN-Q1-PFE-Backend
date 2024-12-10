@@ -9,7 +9,7 @@ POST {{baseUrl}}/issue/create-issue
 Content-Type: application/json
 
 {
-    "issueName": "Coouceourrr",
+    "issueName": "aaaa",
     "issueGroupName": "Environnement"
 }
 
