@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from "mongoose";
 
 /**
  * The issue schema.
@@ -11,7 +11,7 @@ export class Issue extends Document {
     issueName: string;
 
     @Prop({ required: true })
-    group_id: number;
+    group_id: Types.ObjectId;
 }
 
 export const IssueSchema = SchemaFactory.createForClass(Issue);

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Issue } from '../../schemas/issue.schema';
-import { Model } from 'mongoose';
+import { Model, ObjectId, Types } from "mongoose";
 
 @Injectable()
 export class IssueService {
@@ -14,7 +14,7 @@ export class IssueService {
         return this.IssueModel.find().exec();
     }
 
-    public async createIssue(issueName: string, groupId: number): Promise<Issue> {
+    public async createIssue(issueName: string, groupId: Types.ObjectId): Promise<Issue> {
         const newIssue = new this.IssueModel({ issueName, group_id: groupId });
         return newIssue.save();
     }
