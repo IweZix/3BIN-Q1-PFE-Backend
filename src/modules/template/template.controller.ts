@@ -36,7 +36,7 @@ export class TemplateController {
         if (existingTemplate) {
             throw new ConflictException('Template already exists');
         }
-        return this.templateService.createTemplate(TemplateDto);
+        return this.templateService.createTemplate(TemplateDto.templateName);
     }
 
     @Delete('delete-template/:templateName')
