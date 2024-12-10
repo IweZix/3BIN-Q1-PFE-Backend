@@ -110,14 +110,16 @@ export class AuthService {
         return company.questions;
     }
 
-    public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {
-        console.log("emailllll" + email);
-        
+    public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {        
         const company: Company = await this.companyModel.findOne({ email: email }).exec();
-        
+        let isValidated:boolean = true;
         if (!company) {
             throw new Error('Company not found');
         }
+        for (const question of answers){
+             isValidated = isValidated && question.validatedQuestion;
+        }
+        company.isValidated = isValidated;
         company.questions = answers;
         await this.companyModel.replaceOne({ email: email }, company).exec();
     }

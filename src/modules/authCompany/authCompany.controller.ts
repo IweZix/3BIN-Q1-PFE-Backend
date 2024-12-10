@@ -60,7 +60,6 @@ export class AuthCompanyController {
         @Body('listQuestions') question: QuestionAnswer[],
         @Headers('Authorization') token: string,
     ): Promise<void> {
-        console.log(question);
         const email = await this.authCompanyService.getUserByToken(token);
         if (!email) {
             throw new NotFoundException('Company not found');
@@ -129,7 +128,6 @@ export class AuthCompanyController {
         @Body('listQuestions') question: QuestionAnswer[],
         @Headers('Authorization') token: string,
     ): Promise<void> {
-        console.log(question);
         const email = await this.authCompanyService.getUserByToken(token);
         if (!email) {
             throw new NotFoundException('Company not found');

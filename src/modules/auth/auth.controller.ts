@@ -120,10 +120,7 @@ export class AuthController {
         @Headers('Authorization') token: string,
     ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
-        try {
-            console.log(email);
-            
-            
+        try {     
             return this.userService.getAnswerFormUser(email);
         } catch (error) {
             throw new NotFoundException('User not found');
@@ -139,8 +136,6 @@ export class AuthController {
     ): Promise<void> {
         this.userService.verify(token);
         try {
-            console.log(email);
-            
             await this.userService.postAnswerFormUser(email, answers);
         } catch (error) {
             throw new NotFoundException('User not found');
