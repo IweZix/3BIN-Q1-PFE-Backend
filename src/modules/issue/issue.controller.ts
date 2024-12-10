@@ -12,13 +12,17 @@ import {
 import { IssueService } from './issue.service';
 import { Issue } from '../../schemas/issue.schema';
 import { ValidationPipe } from '@nestjs/common';
+import { GroupIssue } from "../../schemas/groupIssue.schema";
+import { GroupIssueService } from "../groupIssue/groupIssue.service";
 
 @Controller('issue')
 export class IssueController {
     private readonly issueService: IssueService;
+    private readonly groupIssueService: GroupIssueService;
 
-    public constructor(issueService: IssueService) {
+    public constructor(issueService: IssueService, groupIssueService: GroupIssueService) {
         this.issueService = issueService;
+        this.groupIssueService = groupIssueService;
     }
 
     @Get()
@@ -29,12 +33,19 @@ export class IssueController {
 
     @Post('create-issue')
     @HttpCode(201)
-    async createOneIssue(@Body(new ValidationPipe()) IssueDto: { issueName: string }): Promise<Issue> {
-        const existingIssue: Issue = await this.issueService.getIssueByName(IssueDto.issueName);
+    async createOneIssue(
+        @Body(new ValidationPipe()) { issueName, issueGroupName }: { issueName: string; issueGroupName: string },
+    ): Promise<Issue> {
+        const existingIssue: Issue = await this.issueService.getIssueByName(issueName);
         if (existingIssue) {
             throw new ConflictException('Issue already exists');
         }
-        return this.issueService.createIssue(IssueDto);
+        const existingIssueGroupName: GroupIssue = await this.groupIssueService.getGroupIssueByName(issueGroupName);
+        if (!existingIssueGroupName) {
+            throw new NotFoundException('Group issue not found');
+        }
+        console.log(existingIssueGroupName);
+        return this.issueService.createIssue(issueName, existingIssueGroupName._id);
     }
 
     @Delete('delete-issue')
