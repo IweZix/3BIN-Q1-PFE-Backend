@@ -81,7 +81,7 @@ export class AuthController {
         return this.userService.verify(token);
     }
 
-       /**
+    /**
      * Verify a user.
      * @param token The token to verify.
      * @returns {Promise<Boolean>} The verified user.
@@ -90,9 +90,9 @@ export class AuthController {
     @HttpCode(200)
     async verifyBool(@Headers('Authorization') token: string): Promise<boolean> {
         try {
-            
-        if(!await this.userService.verify(token)){
-            return false;}
+            if (!(await this.userService.verify(token))) {
+                return false;
+            }
         } catch (error) {
             return false;
         }
@@ -121,7 +121,7 @@ export class AuthController {
         @Headers('Authorization') token: string,
     ): Promise<QuestionAnswer[]> {
         this.userService.verify(token);
-        try {     
+        try {
             return this.userService.getAnswerFormUser(email);
         } catch (error) {
             throw new NotFoundException('User not found');

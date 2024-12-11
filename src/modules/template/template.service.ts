@@ -14,9 +14,9 @@ export class TemplateService {
         return this.TemplateModel.find().exec();
     }
 
-    public async createTemplate(templateName: string ): Promise<Template> {
-        const size= (await this.getAllTemplates()).length;
-        const TemplateDto = { templateName: templateName, _id: size  };
+    public async createTemplate(templateName: string): Promise<Template> {
+        const size = (await this.getAllTemplates()).length;
+        const TemplateDto = { templateName: templateName, _id: size };
         const newTemplate = new this.TemplateModel(TemplateDto);
         return newTemplate.save();
     }

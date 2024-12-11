@@ -11,7 +11,7 @@ export class Template extends Document {
     templateName: string;
 
     @Prop({ required: true })
-    _id:string;
+    _id: number;
 }
 
 export const TemplateSchema = SchemaFactory.createForClass(Template);

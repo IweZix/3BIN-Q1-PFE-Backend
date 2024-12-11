@@ -44,8 +44,7 @@ export class GroupIssueController {
 
     @Delete('delete-groupIssue/:groupIssueName')
     @HttpCode(204)
-    async deleteGroupIssue(
-        @Param('groupIssueName') groupIssueName: string) {
+    async deleteGroupIssue(@Param('groupIssueName') groupIssueName: string) {
         const existingIssue: GroupIssue = await this.groupIssueService.getGroupIssueByName(groupIssueName);
         if (!existingIssue) {
             throw new NotFoundException('issue not found');

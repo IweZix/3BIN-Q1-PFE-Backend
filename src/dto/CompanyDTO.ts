@@ -1,7 +1,7 @@
-import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CompanyDTO {
-     @IsString()
+    @IsString()
     @IsNotEmpty()
     name: string;
 
@@ -16,5 +16,4 @@ export class CompanyDTO {
     @IsBoolean()
     @IsNotEmpty()
     isValidated: boolean;
-
 }

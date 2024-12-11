@@ -1,7 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 
 export class GlossaireDTO {
-
     @IsString()
     @IsNotEmpty()
     title: string;

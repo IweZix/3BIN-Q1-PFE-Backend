@@ -13,7 +13,7 @@ export class GlossaireService {
 
     public async getAllGlossaire(): Promise<GlossaireDTO[]> {
         const glossaires: Glossaire[] = await this.glossaireModel.find().exec();
-        const glo :GlossaireDTO[] = glossaires.map(g => ({
+        const glo: GlossaireDTO[] = glossaires.map(g => ({
             title: g.title,
             definition: g.definition,
             remarque: g.remarque,
@@ -21,5 +21,4 @@ export class GlossaireService {
         }));
         return glo;
     }
-
 }

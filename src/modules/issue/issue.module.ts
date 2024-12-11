@@ -3,8 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Issue, IssueSchema } from '../../schemas/issue.schema';
 import { IssueService } from './issue.service';
 import { IssueController } from './issue.controller';
-import { GroupIssue, GroupIssueSchema } from "../../schemas/groupIssue.schema";
-import { GroupIssueModule } from "../groupIssue/groupIssue.module";
+import { GroupIssue, GroupIssueSchema } from '../../schemas/groupIssue.schema';
+import { GroupIssueModule } from '../groupIssue/groupIssue.module';
 
 @Module({
     imports: [
