@@ -13,6 +13,22 @@ Content-Type: application/json
   ]
 }
 
+
+
+
+### Create a company
+POST {{baseUrl}}/authCompany/register-company
+Content-Type: application/json
+
+{
+  "name": "testtemplate",
+  "email": "testtemplate@steam.com",
+  "password": "password",
+  "template": [
+    1,2
+  ]
+}
+
 ### Login
 POST {{baseUrl}}/authCompany/login-company
 Content-Type: application/json
