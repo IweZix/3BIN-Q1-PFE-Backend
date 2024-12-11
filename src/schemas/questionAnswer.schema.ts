@@ -9,9 +9,9 @@ export class QuestionAnswer extends Document {
 
     @Prop({ required: true })
     questionsList: Question[];
-    
+
     @Prop({ required: false })
-    validatedQuestion:boolean;
+    validatedQuestion: boolean;
 }
 
 export const QuestionAnswerSchema = SchemaFactory.createForClass(QuestionAnswer);

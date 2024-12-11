@@ -94,16 +94,14 @@ export class AuthCompanyController {
         @Body('password', new ValidationPipe()) password: string,
         @Headers('Authorization') token: string,
     ): Promise<boolean> {
-        try{
-        const decoded = await this.authCompanyService.verify(token);
-        const email = decoded.email;
-       
-        
+        try {
+            const decoded = await this.authCompanyService.verify(token);
+            const email = decoded.email;
 
-        await this.authCompanyService.updatePassword(email, password);
-    }catch(e){
-        return false;
-    }
+            await this.authCompanyService.updatePassword(email, password);
+        } catch (e) {
+            return false;
+        }
         return true;
     }
 
@@ -143,13 +141,12 @@ export class AuthCompanyController {
     @Get('formCompleted')
     @HttpCode(200)
     async getFormCompleted(@Headers('Authorization') token: string): Promise<boolean> {
-        try{
+        try {
             const company = await this.authCompanyService.verify(token);
             return company.formIsComplete;
-        }catch(e){
+        } catch (e) {
             return false;
         }
-        
     }
 
     @Get('answerForm')

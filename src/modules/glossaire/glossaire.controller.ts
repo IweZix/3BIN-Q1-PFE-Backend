@@ -13,11 +13,10 @@ export class GlossaireController {
     /**
      * Get all glossaire.
      * @returns {Promise<GlossaireDTO[]>} The glossaire.
-    */
+     */
     @Get()
     @HttpCode(200)
     async getAllGlossaire(): Promise<GlossaireDTO[]> {
         return await this.glossaireService.getAllGlossaire();
     }
-
 }

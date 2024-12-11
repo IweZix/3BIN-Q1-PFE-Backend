@@ -16,7 +16,6 @@ import { CompanyDTO } from 'src/dto/CompanyDTO';
  */
 @Injectable()
 export class AuthService {
-    
     private readonly SALT_ROUNDS: number = config.BCRYPT_SALT_ROUNDS;
     private readonly JWT_SECRET: string = config.JWT_SECRET;
     private readonly JWT_LIFETIME: number = config.JWT_LIFETIME;
@@ -80,7 +79,7 @@ export class AuthService {
             const { password, ...userWithoutPassword } = user.toObject();
             return userWithoutPassword;
         } catch (error) {
-            return null
+            return null;
         }
     }
 
@@ -110,14 +109,14 @@ export class AuthService {
         return company.questions;
     }
 
-    public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {        
+    public async postAnswerFormUser(email: string, answers: QuestionAnswer[]): Promise<void> {
         const company: Company = await this.companyModel.findOne({ email: email }).exec();
-        let isValidated:boolean = true;
+        let isValidated: boolean = true;
         if (!company) {
             throw new Error('Company not found');
         }
-        for (const question of answers){
-             isValidated = isValidated && question.validatedQuestion;
+        for (const question of answers) {
+            isValidated = isValidated && question.validatedQuestion;
         }
         company.isValidated = isValidated;
         company.questions = answers;
@@ -142,10 +141,10 @@ export class AuthService {
         return true;
     }
 
-    public async validatedFormUser(email: string) : Promise<boolean> {
+    public async validatedFormUser(email: string): Promise<boolean> {
         const company: Company = await this.companyModel.findOne({ email: email }).exec();
-        for(const question of company.questions ){
-            if(!question.validatedQuestion){
+        for (const question of company.questions) {
+            if (!question.validatedQuestion) {
                 return false;
             }
         }
@@ -154,7 +153,7 @@ export class AuthService {
 
     public async getAllCompanies(): Promise<CompanyDTO[]> {
         const companies: Company[] = await this.companyModel.find().exec();
-        const c :CompanyDTO[]= companies.map(company => ({
+        const c: CompanyDTO[] = companies.map(company => ({
             name: company.name,
             email: company.email,
             formIsComplete: company.formIsComplete,

@@ -40,7 +40,6 @@ export class ScoringService {
         scoring.issuesList = [];
         scoring.percentNow = 0.7;
 
-
         for (const questionAnswer of QuestionAnswer) {
             let issueScoring = new this.IssueScoringModel();
             const [scoreNow, score2Years, scoreTotal] = this.calculateFromIssue(questionAnswer.questionsList);
@@ -48,8 +47,8 @@ export class ScoringService {
 
             issueScoring.issue = questionAnswer.issue_id;
             issueScoring.scoreTotalNow = parseFloat((scoreNow + scoreTotalNA).toFixed(2));
-            issueScoring.scoreTotal2Years = parseFloat((score2Years).toFixed(2));
-            issueScoring.scoreTotal = parseFloat((scoreTotal +scoreTotalNA ).toFixed(2));
+            issueScoring.scoreTotal2Years = parseFloat(score2Years.toFixed(2));
+            issueScoring.scoreTotal = parseFloat((scoreTotal + scoreTotalNA).toFixed(2));
             scoring.issuesList.push(issueScoring);
             if (scoreTotal < scoreNow) {
                 totalTotal = scoreNow;
@@ -59,7 +58,7 @@ export class ScoringService {
         }
         scoring.scoreTotalNow = totalScoreNow;
         scoring.scoreTotal2Years = totalScore2Years;
-        scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);       
+        scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);
         return this.ScoringModel.create(scoring);
     }
 
@@ -72,7 +71,7 @@ export class ScoringService {
             }
             if (answer.is2years) {
                 score2Years += answer.score2;
-            }      
+            }
         }
         return [score, score2Years];
     }
@@ -110,32 +109,38 @@ export class ScoringService {
         return scoreTotal;
     }
 
-    private async  calculateScoreTotalByGroupIssue(issues: IssueScoring[]): Promise<number> {
-        const listGroup : GroupIssue[] = await this.groupIssueService.getAllGroupIssues();//On récup la liste des groupissues
-        const listIssue: Issue[]  = await this.issueService.getAllIssues();//On récup la liste des issues
-        let total: number[]=[];
+    private async calculateScoreTotalByGroupIssue(issues: IssueScoring[]): Promise<number> {
+        const listGroup: GroupIssue[] = await this.groupIssueService.getAllGroupIssues(); //On récup la liste des groupissues
+        const listIssue: Issue[] = await this.issueService.getAllIssues(); //On récup la liste des issues
+        let total: number[] = [];
         const percentNow = 0.7;
-        let compteur=0; 
+        let compteur = 0;
         let compteurIssue = 0;
-        for(const groupIssue of listGroup){
-            total[compteur]=0;
-            for(const issue of listIssue){
-                if(groupIssue.groupIssueName===issue.group_name){
-                    for(const issueScoring of issues){                       
-                        if(issueScoring.issue === Number(issue._id)){
+        for (const groupIssue of listGroup) {
+            total[compteur] = 0;
+            for (const issue of listIssue) {
+                if (groupIssue.groupIssueName === issue.group_name) {
+                    for (const issueScoring of issues) {
+                        if (issueScoring.issue === Number(issue._id)) {
                             compteurIssue++;
-                             if(issueScoring.scoreTotal!=0){
-                            total[compteur]+= Number(Number((issueScoring.scoreTotalNow * percentNow + issueScoring.scoreTotal2Years * (1 - percentNow))/issueScoring.scoreTotal).toFixed(2));
-                             }
-                           }
+                            if (issueScoring.scoreTotal != 0) {
+                                total[compteur] += Number(
+                                    Number(
+                                        (issueScoring.scoreTotalNow * percentNow +
+                                            issueScoring.scoreTotal2Years * (1 - percentNow)) /
+                                            issueScoring.scoreTotal,
+                                    ).toFixed(2),
+                                );
+                            }
+                        }
                     }
                 }
             }
 
-            total[compteur] = total[compteur]/compteurIssue *0.3;
+            total[compteur] = (total[compteur] / compteurIssue) * 0.3;
             total[compteur] = Number(total[compteur].toFixed(2));
             compteur++;
-        }        
+        }
         return total.reduce((a, b) => a + b, 0);
     }
 }

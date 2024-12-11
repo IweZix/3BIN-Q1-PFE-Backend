@@ -13,8 +13,8 @@ import {
 import { IssueService } from './issue.service';
 import { Issue } from '../../schemas/issue.schema';
 import { ValidationPipe } from '@nestjs/common';
-import { GroupIssue } from "../../schemas/groupIssue.schema";
-import { GroupIssueService } from "../groupIssue/groupIssue.service";
+import { GroupIssue } from '../../schemas/groupIssue.schema';
+import { GroupIssueService } from '../groupIssue/groupIssue.service';
 
 @Controller('issue')
 export class IssueController {

@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId, Types } from "mongoose";
+import { Document, ObjectId, Types } from 'mongoose';
 
 /**
  * The group issue schema.

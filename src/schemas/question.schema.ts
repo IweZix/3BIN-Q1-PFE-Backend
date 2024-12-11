@@ -14,5 +14,4 @@ export class Question extends Document {
     @Exclude()
     @Prop({ required: true })
     scoreTotal: number;
-
 }
