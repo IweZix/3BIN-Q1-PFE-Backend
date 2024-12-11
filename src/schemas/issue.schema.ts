@@ -12,6 +12,10 @@ export class Issue extends Document {
 
     @Prop({ required: true })
     group_name: string;
+
+    @Prop({ required: true })
+    _id:string;
+
 }
 
 export const IssueSchema = SchemaFactory.createForClass(Issue);
