@@ -11,6 +11,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: example # Password example
         volumes:
             - mongo-data:/data/db # Mount the volume
+            - ./init:/docker-entrypoint-initdb.d # put you initialize script in this folder. Like this, it'll be executed at the creation
 
     nestjs:
         image: node:18
