@@ -43,7 +43,7 @@ export class AuthCompanyController {
     async login(@Body(new ValidationPipe()) company: LoginDTO): Promise<Company> {
         const companyFound = await this.authCompanyService.getCompanyByEmail(company.email);
         if (!companyFound) {
-            throw new ConflictException('Company not found');
+            return null;
         }
         return this.authCompanyService.login(company, companyFound);
     }
