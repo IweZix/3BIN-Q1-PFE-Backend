@@ -35,18 +35,22 @@ export class IssueController {
     @Post('create-issue')
     @HttpCode(201)
     async createOneIssue(
-        @Body(new ValidationPipe()) { issueName, issueGroupName }: { issueName: string; issueGroupName: string },
+        @Body(new ValidationPipe())
+        { issueName, issueGroupName }: { issueName: string; issueGroupName: string },
     ): Promise<Issue> {
-        const existingIssue: Issue = await this.issueService.getIssueByName(issueName);
+        const existingIssue = await this.issueService.getIssueByName(issueName);
         if (existingIssue) {
             throw new ConflictException('Issue already exists');
         }
-        const existingIssueGroupName: GroupIssue = await this.groupIssueService.getGroupIssueByName(issueGroupName);
+    
+        const existingIssueGroupName = await this.groupIssueService.getGroupIssueByName(issueGroupName);
         if (!existingIssueGroupName) {
             throw new NotFoundException('Group issue not found');
         }
+    
         return this.issueService.createIssue(issueName, existingIssueGroupName.groupIssueName);
     }
+    
 
     @Delete('delete-issue/:issueName')
     @HttpCode(204)
