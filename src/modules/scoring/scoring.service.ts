@@ -57,7 +57,6 @@ export class ScoringService {
             totalScoreNow += scoreNow;
             totalScore2Years += score2Years;
         }
-        //de base les 2 en dessous je les ai pas changé alorq je capte pas prq ca bug
         scoring.scoreTotalNow = totalScoreNow;
         scoring.scoreTotal2Years = totalScore2Years;
         scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);
