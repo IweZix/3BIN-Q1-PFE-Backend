@@ -5,7 +5,7 @@ import { Question } from './question.schema';
 @Schema()
 export class QuestionAnswer extends Document {
     @Prop({ required: true })
-    issueId: number;
+    issue_id: number;
 
     @Prop({ required: true })
     questionsList: Question[];
