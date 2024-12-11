@@ -12,7 +12,6 @@ import { GroupIssueService } from '../groupIssue/groupIssue.service';
 import { IssueService } from '../issue/issue.service';
 import { GroupIssue } from 'src/schemas/groupIssue.schema';
 import { Issue } from 'src/schemas/issue.schema';
-import { log } from 'console';
 
 @Injectable()
 export class ScoringService {
@@ -25,7 +24,11 @@ export class ScoringService {
     ) {}
 
     public async getScoresTotal(email: string): Promise<Scoring[]> {
-        return this.ScoringModel.find({ companyEmail: email }).exec();
+        const  scores=await this.ScoringModel.find({ companyEmail: email }).exec();
+        for (const score of scores) {
+            score.totalTotal = parseFloat((score.totalTotal).toFixed(2));
+        }
+        return scores;
     }
 
     public async calculateScore(email: string): Promise<Scoring> {
