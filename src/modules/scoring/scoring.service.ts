@@ -59,7 +59,7 @@ export class ScoringService {
         }
         scoring.scoreTotalNow = totalScoreNow;
         scoring.scoreTotal2Years = totalScore2Years;
-        scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);
+        scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);       
         return this.ScoringModel.create(scoring);
     }
 
@@ -119,7 +119,6 @@ export class ScoringService {
         let compteurIssue = 0;
         for(const groupIssue of listGroup){
             total[compteur]=0;
-            
             for(const issue of listIssue){
                 if(groupIssue.groupIssueName===issue.group_name){
                     for(const issueScoring of issues){                       
@@ -132,9 +131,11 @@ export class ScoringService {
                     }
                 }
             }
-            total[compteur] = (total[compteur]/compteurIssue) * 0,3 ;
+
+            total[compteur] = total[compteur]/compteurIssue *0.3;
+            total[compteur] = Number(total[compteur].toFixed(2));
             compteur++;
         }        
-        return total.reduce((a, b) => a + b);
+        return total.reduce((a, b) => a + b, 0);
     }
 }
