@@ -64,7 +64,8 @@ export class AuthController {
     async login(@Body(new ValidationPipe()) user: LoginDTO): Promise<Admin> {
         const userFound = await this.userService.getAdminByEmail(user.email);
         if (!userFound) {
-            throw new NotFoundException('User not found');
+            console.log('User not found');
+            return null;
         }
         return await this.userService.login(user, userFound);
     }
