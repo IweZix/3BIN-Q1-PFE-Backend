@@ -6,12 +6,12 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzc3MDIyOSwiZXhwIjoxODIwMTcwMjI5fQ.xcY7lLC9S5syDzHscUVbWQmVO7M7Xx5_Dj9Dxh5GmPU
 
 {
-  "email": "testtemplate@steam.com"
+  "email": "contact@steam.com"
 }
 
 
 ### Get scoring
-GET {{baseUrl}}/scoring/email=contact@steam.com
+GET {{baseUrl}}/scoring/contact@steam.com
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlhdCI6MTczMzQ5MTMxNSwiZXhwIjoxODE5ODkxMzE1fQ.90fZbYy-iu1bzJKUtpzTNdKWFfqLPljWfa2ZtdjDfSA
 

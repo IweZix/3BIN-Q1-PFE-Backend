@@ -23,21 +23,20 @@ export class ScoringService {
         private readonly authCompanyService: AuthCompanyService,
     ) {}
 
-    public async getScoresTotal(email: string): Promise<Scoring[]> {
-        const  scores=await this.ScoringModel.find({ companyEmail: email }).exec();
+    public async getScoresTotal(companyEmail: string): Promise<Scoring[]> {
+        const  scores=await this.ScoringModel.find({ companyEmail }).exec();
         for (const score of scores) {
             score.totalTotal = parseFloat((score.totalTotal).toFixed(2));
-        }
+            score.scoreTotal2Years = parseFloat((score.scoreTotal2Years).toFixed(2));
+            score.scoreTotalNow = parseFloat((score.scoreTotalNow).toFixed(2));
+        }        
         return scores;
     }
 
-    public async calculateScore(email: string): Promise<Scoring> {
+    public async calculateScore(email: string): Promise<Scoring> {      
         const company: Company = await this.authCompanyService.getCompanyByEmail(email);
         const QuestionAnswer: QuestionAnswer[] = company.questions;
         const naQuestions: QuestionAnswer[] = company.naQuestions;
-        let totalScoreNow = 0;
-        let totalScore2Years = 0;
-        let totalTotal = 0;
         let scoring = new this.ScoringModel();
         scoring.companyEmail = company.email;
         scoring.issuesList = [];
@@ -53,14 +52,11 @@ export class ScoringService {
             issueScoring.scoreTotal2Years = parseFloat(score2Years.toFixed(2));
             issueScoring.scoreTotal = parseFloat((scoreTotal + scoreTotalNA).toFixed(2));
             scoring.issuesList.push(issueScoring);
-            if (scoreTotal < scoreNow) {
-                totalTotal = scoreNow;
-            }
         }
         scoring.scoreTotalNow =await this.calculateScoreNowByGroupIssue(scoring.issuesList);
         scoring.scoreTotal2Years = await this.calculateScore2YearsByGroupIssue(scoring.issuesList);
         scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);
-        return this.ScoringModel.create(scoring);
+        return await this.ScoringModel.create(scoring);
     }
 
     private calculateScoreFromAnswers(answers: Answer[]): [number, number] {

@@ -43,8 +43,6 @@ export class ScoringController {
         if (!email) {
             throw new NotFoundException('Email is required');
         }
-
-        
       return await this.scoringService.getScoresTotal(email);
     }
 }
