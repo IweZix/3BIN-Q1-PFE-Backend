@@ -1,35 +1,54 @@
 version: '3.8'
 
 services:
-    mongodb:
-        image: mongo:latest
-        container_name: mongodb
-        ports:
-            - '27017:27017' # Expose the port
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root # Username root
-            MONGO_INITDB_ROOT_PASSWORD: example # Password example
-        volumes:
-            - mongo-data:/data/db # Mount the volume
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: PFE
+    volumes:
+      - ./initdb/:/docker-entrypoint-initdb.d
 
-    nestjs:
-        image: node:18
-        container_name: nestjs
-        ports:
-            - '3000:3000' # Expose the port 3000
-        volumes:
-            - ../:/app # Mount the project directory
-            - /app/node_modules # Prevent local node_modules from being used because some modules are not compatible
-              # with the container and need to be reinstalled
-        working_dir: /app
-        command: >
-            sh -c "
-            npm install &&
-            npm run start:dev
-            "
-        depends_on:
-            - mongodb # Depend on the mongodb service
+  nestjs:
+    image: node:18
+    container_name: nestjs
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./back:/back
+      - /back/node_modules
+    working_dir: /back
+    command: >
+      sh -c "
+      npm install &&
+      npm run build &&
+      npm run start:prod
+      "
+    depends_on:
+      - mongodb
+
+  vuejs:
+    image: node:18
+    container_name: vuejs
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./front:/front
+      - /front/node_modules
+    working_dir: /front
+    command: >
+      sh -c "
+      npm install &&
+      npm run dev --host
+      "
+    depends_on:
+      - nestjs
+      - mongodb
 
 volumes:
-    mongo-data:
-        driver: local
+  mongo-data:
+    driver: local
