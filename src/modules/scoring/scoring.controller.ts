@@ -38,12 +38,13 @@ export class ScoringController {
     @Get(':email') // Capture dynamique de l'email dans l'URL
     @HttpCode(200)
     async getScoresTotal(@Param('email') email: string, @Headers('Authorization') token: string): Promise<any> {
-        this.authservice.verify(token);
+       await this.authservice.verify(token);
 
         if (!email) {
             throw new NotFoundException('Email is required');
         }
 
-        return this.scoringService.getScoresTotal(email);
+        
+      return await this.scoringService.getScoresTotal(email);
     }
 }
