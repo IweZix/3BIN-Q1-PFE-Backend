@@ -23,21 +23,20 @@ export class ScoringService {
         private readonly authCompanyService: AuthCompanyService,
     ) {}
 
-    public async getScoresTotal(email: string): Promise<Scoring[]> {
-        const  scores=await this.ScoringModel.find({ companyEmail: email }).exec();
+    public async getScoresTotal(companyEmail: string): Promise<Scoring[]> {
+        const  scores=await this.ScoringModel.find({ companyEmail }).exec();
         for (const score of scores) {
             score.totalTotal = parseFloat((score.totalTotal).toFixed(2));
-        }
+            score.scoreTotal2Years = parseFloat((score.scoreTotal2Years).toFixed(2));
+            score.scoreTotalNow = parseFloat((score.scoreTotalNow).toFixed(2));
+        }        
         return scores;
     }
 
-    public async calculateScore(email: string): Promise<Scoring> {
+    public async calculateScore(email: string): Promise<Scoring> {      
         const company: Company = await this.authCompanyService.getCompanyByEmail(email);
         const QuestionAnswer: QuestionAnswer[] = company.questions;
         const naQuestions: QuestionAnswer[] = company.naQuestions;
-        let totalScoreNow = 0;
-        let totalScore2Years = 0;
-        let totalTotal = 0;
         let scoring = new this.ScoringModel();
         scoring.companyEmail = company.email;
         scoring.issuesList = [];
@@ -53,16 +52,11 @@ export class ScoringService {
             issueScoring.scoreTotal2Years = parseFloat(score2Years.toFixed(2));
             issueScoring.scoreTotal = parseFloat((scoreTotal + scoreTotalNA).toFixed(2));
             scoring.issuesList.push(issueScoring);
-            if (scoreTotal < scoreNow) {
-                totalTotal = scoreNow;
-            }
-            totalScoreNow += scoreNow;
-            totalScore2Years += score2Years;
         }
-        scoring.scoreTotalNow = totalScoreNow;
-        scoring.scoreTotal2Years = totalScore2Years;
+        scoring.scoreTotalNow =await this.calculateScoreNowByGroupIssue(scoring.issuesList);
+        scoring.scoreTotal2Years = await this.calculateScore2YearsByGroupIssue(scoring.issuesList);
         scoring.totalTotal = await this.calculateScoreTotalByGroupIssue(scoring.issuesList);
-        return this.ScoringModel.create(scoring);
+        return await this.ScoringModel.create(scoring);
     }
 
     private calculateScoreFromAnswers(answers: Answer[]): [number, number] {
@@ -134,6 +128,63 @@ export class ScoringService {
                                             issueScoring.scoreTotal,
                                     ).toFixed(2),
                                 );
+                            }
+                        }
+                    }
+                }
+            }
+
+            total[compteur] = (total[compteur] / compteurIssue) * 0.3;
+            total[compteur] = Number(total[compteur].toFixed(2));
+            compteur++;
+        }
+        return total.reduce((a, b) => a + b, 0);
+    }
+
+
+    private async calculateScoreNowByGroupIssue(issues: IssueScoring[]): Promise<number> {
+        const listGroup: GroupIssue[] = await this.groupIssueService.getAllGroupIssues(); //On récup la liste des groupissues
+        const listIssue: Issue[] = await this.issueService.getAllIssues(); //On récup la liste des issues
+        let total: number[] = [];
+        let compteur = 0;
+        let compteurIssue = 0;
+        for (const groupIssue of listGroup) {
+            total[compteur] = 0;
+            for (const issue of listIssue) {
+                if (groupIssue.groupIssueName === issue.group_name) {
+                    for (const issueScoring of issues) {
+                        if (issueScoring.issue === Number(issue._id)) {
+                            compteurIssue++;
+                            if (issueScoring.scoreTotal != 0) {
+                                total[compteur] += Number(Number((issueScoring.scoreTotalNow/issueScoring.scoreTotal).toFixed(2)));
+                            }
+                        }
+                    }
+                }
+            }
+
+            total[compteur] = (total[compteur] / compteurIssue) * 0.3;
+            total[compteur] = Number(total[compteur].toFixed(2));
+            compteur++;
+        }
+        return total.reduce((a, b) => a + b, 0);
+    }
+
+    private async calculateScore2YearsByGroupIssue(issues: IssueScoring[]): Promise<number> {
+        const listGroup: GroupIssue[] = await this.groupIssueService.getAllGroupIssues(); //On récup la liste des groupissues
+        const listIssue: Issue[] = await this.issueService.getAllIssues(); //On récup la liste des issues
+        let total: number[] = [];
+        let compteur = 0;
+        let compteurIssue = 0;
+        for (const groupIssue of listGroup) {
+            total[compteur] = 0;
+            for (const issue of listIssue) {
+                if (groupIssue.groupIssueName === issue.group_name) {
+                    for (const issueScoring of issues) {
+                        if (issueScoring.issue === Number(issue._id)) {
+                            compteurIssue++;
+                            if (issueScoring.scoreTotal != 0) {
+                                total[compteur] += Number(Number((issueScoring.scoreTotal2Years/issueScoring.scoreTotal).toFixed(2)));
                             }
                         }
                     }
