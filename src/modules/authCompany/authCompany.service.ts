@@ -136,6 +136,9 @@ export class AuthCompanyService {
         const allTemplateQuestions = company.template;
         for (const answerQuestion of allQuestions) {
             for (const question of answerQuestion.questionsList) {
+                if (question.txt.match(/XXX/)) {
+                    question.txt = question.txt.replace(/XXX/, company.name);
+                }
                 for (const answer of question.responsesList) {
                     if (!allTemplateQuestions.includes(Number(answer.template))) {
                         question.responsesList = question.responsesList.filter(
